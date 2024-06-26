@@ -1,7 +1,7 @@
 enum MissileState {
     ALERT,
     ACTIVE,
-    DESTROYED
+    DESTROYED,
 }
 
-export default MissileState;
+export default MissileState
