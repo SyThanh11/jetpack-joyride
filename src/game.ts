@@ -1,6 +1,7 @@
 import { Game as MainGame } from './scenes/Game'
 
 import { Game, Types } from 'phaser'
+import PreloadScene from './scenes/PreloadScene'
 
 const config: Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -18,7 +19,7 @@ const config: Types.Core.GameConfig = {
             debug: true,
         },
     },
-    scene: [MainGame],
+    scene: [MainGame, PreloadScene],
 }
 
 export default new Game(config)

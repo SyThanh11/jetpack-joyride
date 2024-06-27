@@ -6,7 +6,6 @@ import PlayerState from './PlayerState'
 class RunState extends PlayerState {
     enter(player: Player): void {
         player.playAnimation('runBody', 'runHead', 'runJetpack')
-        player.body.setVelocityX(400)
     }
 
     handlePointerDown(player: Player): void {
