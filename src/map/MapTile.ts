@@ -1,3 +1,4 @@
+import Bullet from '../objects/player/Bullet'
 import FallState from '../objects/player/state/FallState'
 import Player from '../objects/player/state/Player'
 import TakeOffState from '../objects/player/state/TakeOffState'
@@ -37,6 +38,14 @@ class MapTile extends Phaser.GameObjects.Container {
                 if (player.getCurrentState() instanceof FallState) {
                     player.setCurrentState(new TakeOffState())
                 }
+            })
+        }
+    }
+
+    public collisionWithBullet(bullet: Bullet) {
+        if (this.colliderLayer) {
+            this.scene.physics.add.collider(bullet, this.colliderLayer, () => {
+                console.log('Hi')
             })
         }
     }

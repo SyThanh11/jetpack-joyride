@@ -1,6 +1,10 @@
 import { Scene } from 'phaser'
 
 class PreloadScene extends Scene {
+    constructor() {
+        super('PreloadScene')
+    }
+
     public preload() {
         this.load.tilemapTiledJSON('startHallway', 'assets/map/startHallway.tmj')
         this.load.image('hallway', 'assets/Levels/Title/titleFG_1_TVOS.png')
@@ -22,6 +26,15 @@ class PreloadScene extends Scene {
             frameHeight: 176 / 4,
         })
         this.load.image('shadow', 'assets/Characters/effect_shadow.png')
+        this.load.image('bullet', 'assets/Characters/Effects/effect_smgbullet.png')
+        this.load.spritesheet('bulletFlash', 'assets/Characters/Effects/bulletFlash_TVOS.png', {
+            frameWidth: 256 / 4,
+            frameHeight: 64,
+        })
+        this.load.spritesheet('bulletSplash', 'assets/Characters/Effects/bulletSplash_TVOS.png', {
+            frameWidth: 256 / 4,
+            frameHeight: 64,
+        })
 
         this.load.spritesheet('missile', 'assets/Obstacles/Missile/missile.png', {
             frameWidth: 32,
@@ -69,6 +82,33 @@ class PreloadScene extends Scene {
             frameWidth: 256 / 4,
             frameHeight: 32,
         })
+
+        const image = this.add.image(innerWidth / 2, innerHeight / 2, 'screen')
+        image.setOrigin(0.5, 0.5)
+        image.setScale(window.innerWidth / image.width, window.innerHeight / image.height)
+
+        const progressBar = this.add.graphics()
+        const progressBox = this.add.graphics()
+        progressBox.fillStyle(0x222222, 0.8)
+        progressBox.fillRect(innerWidth / 2, innerHeight / 2 + 220, innerWidth / 3, 50)
+
+        const percentText = this.make.text({
+            x: innerWidth / 1.5,
+            y: innerHeight / 1.25,
+            text: '0%',
+            style: {
+                font: '18px monospace',
+                color: '#ffffff',
+            },
+        })
+        percentText.setOrigin(0.5, 0.5)
+
+        this.load.on('progress', function (value: number) {
+            percentText.setText(String(value * 100) + '%')
+            progressBar.clear()
+            progressBar.fillStyle(0xffffff, 1)
+            progressBar.fillRect(innerWidth / 2, innerHeight / 2 + 220, 569 * value, 50)
+        })
     }
 
     public create() {
@@ -88,6 +128,8 @@ class PreloadScene extends Scene {
         this.createAnimation('dieHead', 'defaultHead', 24, 27, 10)
         this.createAnimation('dieBodyTwo', 'defaultBody', 28, 31, 10)
         this.createAnimation('dieHeadTwo', 'defaultHead', 28, 31, 10)
+        this.createAnimation('bulletFlash', 'bulletFlash', 0, 3, 10, -1)
+        this.createAnimation('bulletSplash', 'bulletSplash', 0, 3, 10)
 
         this.createAnimation('missile', 'missile', 0, 3, 5)
         this.createAnimation('missileAlert', 'missileAlert', 0, 7, 5)
@@ -102,6 +144,8 @@ class PreloadScene extends Scene {
         this.createAnimation('laserWarning', 'laserWarning', 0, 3, 10, 1)
         this.createAnimation('laserGlow', 'laserPower', 0, 7, 10)
         this.createAnimation('laserPower', 'laserPower', 8, 15, 10)
+
+        this.scene.start('Game')
     }
 
     public createAnimation(

@@ -1,3 +1,5 @@
+import Bullet from '../objects/player/Bullet'
+import Player from '../objects/player/state/Player'
 import HallwayMap from './HallwayMap'
 import MapTile from './MapTile'
 import RoomMap from './RoomMap'
@@ -32,6 +34,22 @@ class MapManager {
 
     public getHallwayMap() {
         return this.hallwayMap
+    }
+
+    public collisionWithPlayer(player: Player) {
+        const allOfMaps = [this.hallwayMap, ...this.listOfMap]
+        for (const map of allOfMaps) {
+            map.collisionWithPlayer(player)
+        }
+    }
+
+    public collisionWithBullet(bullet: Bullet) {
+        console.log('Hi')
+
+        const allOfMaps = [this.hallwayMap, ...this.listOfMap]
+        for (const map of allOfMaps) {
+            map.collisionWithBullet(bullet)
+        }
     }
 }
 
