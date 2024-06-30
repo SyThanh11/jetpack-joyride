@@ -1,31 +1,39 @@
-import Bullet from '../objects/player/Bullet'
-import Player from '../objects/player/state/Player'
 import HallwayMap from './HallwayMap'
+import HallwayOneMap from './HallwayOneMap'
+import LabMap from './LabMap'
 import MapTile from './MapTile'
 import RoomMap from './RoomMap'
 
 class MapManager {
     private hallwayMap: HallwayMap
-    private roomMapOne: RoomMap
-    private roomMapTwo: RoomMap
-    private roomMapThree: RoomMap
+    private hallwayOneMap: HallwayOneMap
+    private roomMap: RoomMap
+    private labMap: LabMap
     private listOfMap: MapTile[]
 
+    private gameWidth: number
+
     constructor(scene: Phaser.Scene) {
+        this.gameWidth = Number(scene.game.config.width)
+
         this.hallwayMap = new HallwayMap(scene, 0, 0)
-        this.roomMapOne = new RoomMap(scene, 1120 - 32 * 4, 0)
-        this.roomMapTwo = new RoomMap(scene, this.roomMapOne.x + 2432 - 32 * 4, 0)
-        this.roomMapThree = new RoomMap(scene, this.roomMapTwo.x + 2432 - 32 * 4, 0)
-        this.listOfMap = [this.roomMapOne, this.roomMapTwo, this.roomMapThree]
+        this.hallwayOneMap = new HallwayOneMap(
+            scene,
+            this.hallwayMap.x + this.gameWidth - 32 * 3,
+            0
+        )
+        this.roomMap = new RoomMap(scene, this.hallwayOneMap.x + this.gameWidth - 32 * 3, 0)
+        this.labMap = new LabMap(scene, this.roomMap.x + this.gameWidth - 32 * 3, 0)
+        this.listOfMap = [this.hallwayOneMap, this.roomMap, this.labMap]
     }
 
     update() {
-        if (this.listOfMap[0].x + 2432 - 32 * 4 <= 0) {
+        if (this.listOfMap[0].x + Number(this.gameWidth) + 32 * 3 <= 0) {
             this.listOfMap.shift()
             this.listOfMap.push(
                 new RoomMap(
                     this.listOfMap[this.listOfMap.length - 1].scene,
-                    this.listOfMap[this.listOfMap.length - 1].x + 2432 - 32 * 4,
+                    this.listOfMap[this.listOfMap.length - 1].x + Number(this.gameWidth) - 32 * 3,
                     0
                 )
             )
@@ -34,22 +42,6 @@ class MapManager {
 
     public getHallwayMap() {
         return this.hallwayMap
-    }
-
-    public collisionWithPlayer(player: Player) {
-        const allOfMaps = [this.hallwayMap, ...this.listOfMap]
-        for (const map of allOfMaps) {
-            map.collisionWithPlayer(player)
-        }
-    }
-
-    public collisionWithBullet(bullet: Bullet) {
-        console.log('Hi')
-
-        const allOfMaps = [this.hallwayMap, ...this.listOfMap]
-        for (const map of allOfMaps) {
-            map.collisionWithBullet(bullet)
-        }
     }
 }
 

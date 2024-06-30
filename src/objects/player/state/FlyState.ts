@@ -6,7 +6,7 @@ import PlayerState from './PlayerState'
 class FlyState extends PlayerState {
     enter(player: Player): void {
         player.playAnimation('flyBody', 'flyHead', 'flyJetpack')
-        player.body.setVelocityY(-300)
+        player.body.setVelocityY(-Number(player.scene.game.config.width) / 4)
         player.body.setGravityY(0)
     }
 
@@ -16,6 +16,12 @@ class FlyState extends PlayerState {
 
     handleCollision(player: Player): void {
         player.setCurrentState(new DieState())
+    }
+
+    update(player: Player): void {
+        if (player.y <= Number(player.scene.game.config.height) / 5) {
+            player.y = Number(player.scene.game.config.height) / 5
+        }
     }
 }
 

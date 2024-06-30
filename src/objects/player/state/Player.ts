@@ -1,4 +1,5 @@
 import Bullet from '../Bullet'
+import Cartouche from '../Cartouche'
 import PlayerState from './PlayerState'
 import RunState from './RunState'
 
@@ -9,10 +10,12 @@ class Player extends Phaser.GameObjects.Container {
     private defaultJetpack: Phaser.Physics.Arcade.Sprite
     private shadow: Phaser.Physics.Arcade.Image
     private bulletPool: Phaser.GameObjects.Group
+    private cartouchePool: Phaser.GameObjects.Group
     private bulletEffect: Phaser.Physics.Arcade.Sprite
 
     private currentState: PlayerState
     private isFired = false
+    public score = 0
 
     constructor(
         scene: Phaser.Scene,
@@ -44,26 +47,31 @@ class Player extends Phaser.GameObjects.Container {
             0,
             'defaultJetpack'
         ).setOrigin(0, 0)
-        this.shadow = new Phaser.Physics.Arcade.Image(this.scene, 15, 38, 'shadow')
-        this.shadow.scaleX = 0.8
+        // this.shadow = new Phaser.Physics.Arcade.Image(this.scene, 15, 38, 'shadow')
+        // this.shadow.scaleX = 0.8
         this.bulletPool = this.scene.add.group({
             classType: Bullet,
             maxSize: 40,
             runChildUpdate: true,
         })
         this.bulletEffect = new Phaser.Physics.Arcade.Sprite(this.scene, 9, 54, 'bulletFlash')
+        this.cartouchePool = this.scene.add.group({
+            classType: Cartouche,
+            maxSize: 30,
+            runChildUpdate: true,
+        })
 
         this.add(this.defaultBody)
         this.add(this.defaultJetpack)
         this.add(this.defaultHead)
-        this.add(this.shadow)
+        // this.add(this.shadow)
         this.add(this.bulletEffect)
 
         this.bulletEffect.setScale(0.6)
         this.bulletEffect.setVisible(false)
         this.scene.physics.world.enable(this)
         this.body.setSize(30, 35)
-        this.setScale(1.5)
+        this.setScale(Number(this.scene.game.config.width) / 800)
         this.scene.add.existing(this)
         this.body.onCollide = true
         this.body.setCollideWorldBounds(true)
@@ -112,14 +120,14 @@ class Player extends Phaser.GameObjects.Container {
     }
 
     public preUpdate(): void {
-        if (this.x >= 500) {
+        if (this.x >= Number(this.scene.game.config.width) / 3) {
             this.body.setVelocityX(0)
         }
 
-        const scaleFactor = this.y / 1000 + 0.3
+        // const scaleFactor = this.y / 1000 + 0.3
 
-        this.shadow.scaleX = scaleFactor
-        this.shadow.scaleY = scaleFactor
+        // this.shadow.scaleX = scaleFactor
+        // this.shadow.scaleY = scaleFactor
 
         // this.shadow.y = -this.y + 40
 
@@ -127,9 +135,12 @@ class Player extends Phaser.GameObjects.Container {
 
         if (this.isFired == true) {
             const bullet = this.bulletPool.get()
-
+            const cartouche = this.cartouchePool.get()
             if (bullet) {
                 bullet.fire(this.x, this.y)
+            }
+            if (cartouche) {
+                cartouche.fire(this.x, this.y)
             }
         }
     }

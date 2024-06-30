@@ -1,0 +1,142 @@
+{ "compressionlevel":-1,
+ "height":2,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[1, 1, 1, 1,
+            1, 1, 1, 1],
+         "height":2,
+         "id":1,
+         "name":"Tile Layer 1",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":4,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":2,
+         "name":"Coin Object Layer",
+         "objects":[
+                {
+                 "height":32,
+                 "id":1,
+                 "name":"coinEleCoin Object Layer",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":0,
+                 "y":0
+                }, 
+                {
+                 "height":32,
+                 "id":2,
+                 "name":"coinEleCoin Object Layer",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":32,
+                 "y":0
+                }, 
+                {
+                 "height":32,
+                 "id":3,
+                 "name":"coinEleCoin Object Layer",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":64,
+                 "y":0
+                }, 
+                {
+                 "height":32,
+                 "id":4,
+                 "name":"coinEleCoin Object Layer",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":96,
+                 "y":0
+                },
+            
+                {
+                 "height":32,
+                 "id":5,
+                 "name":"coinEleCoin Object Layer",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":96,
+                 "y":32
+                }, 
+                {
+                 "height":32,
+                 "id":6,
+                 "name":"coinEleCoin Object Layer",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":64,
+                 "y":32
+                }, 
+                {
+                 "height":32,
+                 "id":7,
+                 "name":"coinEleCoin Object Layer",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":32,
+                 "y":32
+                }, 
+                {
+                 "height":32,
+                 "id":8,
+                 "name":"coinEleCoin Object Layer",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":0,
+                 "y":32
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":3,
+ "nextobjectid":9,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.10.2",
+ "tileheight":32,
+ "tilesets":[
+        {
+         "columns":8,
+         "firstgid":1,
+         "image":"..\/Entities\/coin1_TVOS.png",
+         "imageheight":32,
+         "imagewidth":256,
+         "margin":0,
+         "name":"coin1_TVOS",
+         "spacing":0,
+         "tilecount":8,
+         "tileheight":32,
+         "tilewidth":32
+        }],
+ "tilewidth":32,
+ "type":"map",
+ "version":"1.10",
+ "width":4
+}

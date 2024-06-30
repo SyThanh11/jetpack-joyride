@@ -8,7 +8,7 @@ class FallState extends PlayerState {
     enter(player: Player): void {
         player.playAnimation('fallBody', 'fallHead', 'fallJetpack')
         player.body.setVelocityY(0)
-        player.body.setGravityY(500)
+        player.body.setGravityY(Number(player.scene.game.config.width) / 3)
     }
 
     handlePointerDown(player: Player): void {
@@ -20,7 +20,7 @@ class FallState extends PlayerState {
     }
 
     update(player: Player): void {
-        if (player.y >= 700) {
+        if (player.y >= Number(player.scene.game.config.height) / 1.45) {
             player.setCurrentState(new TakeOffState())
         }
     }

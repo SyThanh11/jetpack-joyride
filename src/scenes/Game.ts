@@ -23,18 +23,24 @@ export class Game extends Scene {
     }
 
     create() {
-        this.physics.world.setBounds(0, 0, innerWidth, innerHeight, false, false, true, true)
+        const gameWith = Number(this.game.config.width)
+        const gameHeight = Number(this.game.config.height)
 
-        this.player = new Player(this, 500, 650).setDepth(2)
+        this.physics.world.setBounds(0, 0, gameWith, gameHeight, false, false, true, true)
+
+        this.player = new Player(this, gameWith / 3, gameHeight / 1.45).setDepth(2)
 
         this.mapManager = new MapManager(this)
-        this.mapManager.collisionWithPlayer(this.player)
+
+        // const coinMap = new CoinMap(this, 900, 400)
+        // coinMap.collisionWithPlayer(this.player)
         // this.zapperManager = new ZapperManager(this)
         // this.zapperManager.checkCollisionWithPlayer(this.player)
+
         // this.laserManager = new LaserManager(this)
         // this.laserManager.checkCollisionWithPlayer(this.player)
 
-        // this.createMissilePool()
+        this.createMissilePool()
 
         // Events.on('laserVisible', (laser: Laser) => {
         //     laser.startAnimations()
@@ -43,7 +49,7 @@ export class Game extends Scene {
         // this.time.addEvent({
         //     delay: 3000,
         //     callback: () => {
-        //         this.laserManager.spawnLaser(0, Phaser.Math.Between(50, 600))
+        //         this.laserManager.spawnLaser(0, Phaser.Math.Between(200, 600))
         //     },
         //     callbackScope: this,
         //     loop: true,
@@ -52,18 +58,21 @@ export class Game extends Scene {
         // this.time.addEvent({
         //     delay: 3000,
         //     callback: () => {
-        //         this.zapperManager.spawnZapper(1800, Phaser.Math.Between(50, 600))
+        //         this.zapperManager.spawnZapper(
+        //             Number(this.game.config.width) + 100,
+        //             Phaser.Math.Between(200, 600)
+        //         )
         //     },
         //     callbackScope: this,
         //     loop: true,
         // })
 
-        // this.time.addEvent({
-        //     delay: 4000,
-        //     callback: this.spawnMissiles,
-        //     callbackScope: this,
-        //     loop: true,
-        // })
+        this.time.addEvent({
+            delay: 4000,
+            callback: this.spawnMissiles,
+            callbackScope: this,
+            loop: true,
+        })
     }
 
     private createMissilePool() {
@@ -93,7 +102,7 @@ export class Game extends Scene {
         missile.setActive(true)
         missile.state = MissileState.ALERT
 
-        const missileAlert = this.physics.add.sprite(x - 160, y, 'missileAlert').setOrigin(0, 0)
+        const missileAlert = this.physics.add.sprite(x - 64, y, 'missileAlert').setOrigin(0, 0)
         missileAlert.play('missileAlert')
         missile.missileAlert = missileAlert
 
@@ -116,8 +125,8 @@ export class Game extends Scene {
         }
 
         for (let i = 0; i < this.numberMissiles; i++) {
-            const x = 1800
-            const y = Phaser.Math.Between(20, 700)
+            const x = Number(this.game.config.width)
+            const y = Phaser.Math.Between(200, 600)
             this.spawnMissile(x, y)
         }
         this.numberMissiles++

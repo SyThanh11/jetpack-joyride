@@ -53,7 +53,7 @@ class Missile extends Phaser.GameObjects.Container {
 
     preUpdate(time: number, deltaTime: number) {
         if (this.state === MissileState.ACTIVE) {
-            this.x -= (600 * deltaTime) / 1000
+            this.x -= (800 * deltaTime) / 1000
             if (this.x + 100 < 0) {
                 this.state = MissileState.DESTROYED
                 this.triggerMissileEffect()

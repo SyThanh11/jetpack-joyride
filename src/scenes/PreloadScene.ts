@@ -6,12 +6,28 @@ class PreloadScene extends Scene {
     }
 
     public preload() {
-        this.load.tilemapTiledJSON('startHallway', 'assets/map/startHallway.tmj')
+        this.load.tilemapTiledJSON('startHallway', 'assets/map/hallway.tmj')
         this.load.image('hallway', 'assets/Levels/Title/titleFG_1_TVOS.png')
         this.load.image('hallway2', 'assets/Levels/Title/titleFG_2_TVOS.png')
-        this.load.tilemapTiledJSON('room', 'assets/map/room1.tmj')
+        this.load.tilemapTiledJSON('room', 'assets/map/room.tmj')
         this.load.image('room1FG_1_TVOS', 'assets/Levels/Room1/room1FG_1_TVOS.png')
         this.load.image('room1FG_2_TVOS', 'assets/Levels/Room1/room1FG_2_TVOS.png')
+        this.load.tilemapTiledJSON('lab', 'assets/map/lab.tmj')
+        this.load.image('lab1FG_1_TVOS', 'assets/Levels/lab1/lab1FG_1_TVOS.png')
+        this.load.image('lab1FG_2_TVOS', 'assets/Levels/lab1/lab1FG_2_TVOS.png')
+        this.load.tilemapTiledJSON('hallway1', 'assets/map/hallway1.tmj')
+        this.load.image('hallway1FG_1_TVOS', 'assets/Levels/Hallway1/hallway1FG_1_TVOS.png')
+        this.load.image('hallway1FG_2_TVOS', 'assets/Levels/Hallway1/hallway1FG_2_TVOS.png')
+
+        this.load.tilemapTiledJSON('coinMap', 'assets/map/coin.tmj')
+        this.load.spritesheet('coin', 'assets/Entities/coin1_TVOS.png', {
+            frameWidth: 32,
+            frameHeight: 32,
+        })
+        this.load.spritesheet('collectCoin', 'assets/Entities/coinCollect1_TVOS.png', {
+            frameWidth: 32,
+            frameHeight: 32,
+        })
 
         this.load.spritesheet('defaultBody', 'assets/Characters/Barry/defaultBody.png', {
             frameWidth: 32,
@@ -35,6 +51,7 @@ class PreloadScene extends Scene {
             frameWidth: 256 / 4,
             frameHeight: 64,
         })
+        this.load.image('cartouche', 'assets/Characters/Effects/effect_rocketmgshell_TVOS.png')
 
         this.load.spritesheet('missile', 'assets/Obstacles/Missile/missile.png', {
             frameWidth: 32,
@@ -83,18 +100,22 @@ class PreloadScene extends Scene {
             frameHeight: 32,
         })
 
-        const image = this.add.image(innerWidth / 2, innerHeight / 2, 'screen')
+        const gameWidth = Number(this.game.config.width)
+        const gameHeight = Number(this.game.config.height)
+
+        const image = this.add.image(gameWidth / 2, gameHeight / 2, 'screen')
+
         image.setOrigin(0.5, 0.5)
-        image.setScale(window.innerWidth / image.width, window.innerHeight / image.height)
+        image.setScale(gameWidth / image.width, gameHeight / image.height)
 
         const progressBar = this.add.graphics()
         const progressBox = this.add.graphics()
         progressBox.fillStyle(0x222222, 0.8)
-        progressBox.fillRect(innerWidth / 2, innerHeight / 2 + 220, innerWidth / 3, 50)
+        progressBox.fillRect(gameWidth / 2, gameHeight / 1.3, gameWidth / 3, gameHeight / 20)
 
         const percentText = this.make.text({
-            x: innerWidth / 1.5,
-            y: innerHeight / 1.25,
+            x: gameWidth / 1.5,
+            y: gameHeight / 1.26,
             text: '0%',
             style: {
                 font: '18px monospace',
@@ -107,7 +128,12 @@ class PreloadScene extends Scene {
             percentText.setText(String(value * 100) + '%')
             progressBar.clear()
             progressBar.fillStyle(0xffffff, 1)
-            progressBar.fillRect(innerWidth / 2, innerHeight / 2 + 220, 569 * value, 50)
+            progressBar.fillRect(
+                gameWidth / 2,
+                gameHeight / 1.3,
+                (gameWidth / 3) * value,
+                gameHeight / 20
+            )
         })
     }
 
@@ -144,6 +170,9 @@ class PreloadScene extends Scene {
         this.createAnimation('laserWarning', 'laserWarning', 0, 3, 10, 1)
         this.createAnimation('laserGlow', 'laserPower', 0, 7, 10)
         this.createAnimation('laserPower', 'laserPower', 8, 15, 10)
+
+        this.createAnimation('coinEffect', 'coin', 0, 7, 8, -1)
+        this.createAnimation('collectCoin', 'collectCoin', 0, 3, 20)
 
         this.scene.start('Game')
     }

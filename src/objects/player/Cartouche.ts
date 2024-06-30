@@ -1,14 +1,12 @@
-class Bullet extends Phaser.Physics.Arcade.Sprite {
+class Cartouche extends Phaser.Physics.Arcade.Sprite {
     private speed = 0
-    private bulletSplash: Phaser.Physics.Arcade.Sprite
 
     constructor(scene: Phaser.Scene) {
-        super(scene, 0, 0, 'bullet')
-        this.bulletSplash = new Phaser.Physics.Arcade.Sprite(scene, 0, 0, 'bulletSplash')
+        super(scene, 0, 0, 'cartouche')
 
         this.setOrigin(0.5, 0.5)
-
-        this.setAngle(Phaser.Math.RND.pick([100, 90, 80]))
+        this.setScale(0.5)
+        this.setAngle(Phaser.Math.RND.pick([70, 80, 65]))
         this.speed = Phaser.Math.GetSpeed(600, 1)
     }
 
@@ -22,14 +20,14 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     preUpdate(time: number, delta: number): void {
         const radians = Phaser.Math.DegToRad(this.angle)
 
-        this.y += Math.sin(radians) * this.speed * delta
-        this.x += Math.cos(radians) * this.speed * delta
+        this.y += Math.cos(radians) * this.speed * delta
+        this.x -= Math.sin(radians) * this.speed * delta
 
-        if (this.y >= Number(this.scene.game.config.height) / 1.35) {
+        if (this.x + this.width <= 0 || this.y >= Number(this.scene.game.config.height) / 1.35) {
             this.setActive(false)
             this.setVisible(false)
         }
     }
 }
 
-export default Bullet
+export default Cartouche

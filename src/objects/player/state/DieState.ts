@@ -19,6 +19,8 @@ class DieState extends PlayerState {
                 this.onHitGround(player)
             })
         })
+
+        player.body.setImmovable(false)
     }
 
     private onHitGround(player: Player): void {

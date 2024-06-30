@@ -6,8 +6,8 @@ import BootGameScene from './scenes/BootScene'
 
 const config: Types.Core.GameConfig = {
     type: Phaser.AUTO,
-    width: innerWidth,
-    height: innerHeight,
+    width: Number(innerWidth),
+    height: Number((innerWidth * 9) / 16),
     parent: 'game-container',
     backgroundColor: '#000000',
     scale: {

@@ -75,10 +75,10 @@ class Zapper extends Phaser.GameObjects.Container {
         this.scene.physics.world.enable(this.zapperTwo)
 
         this.scene.add.existing(this)
-        this.zapperOne.body?.setSize(32, 32)
-        this.zapperTwo.body?.setSize(32, 32)
-        this.glowOne.setScale(0.8)
-        this.glowTwo.setScale(0.8)
+        // this.zapperOne.body?.setSize(32, 32)
+        // this.zapperTwo.body?.setSize(32, 32)
+        // this.glowOne.setScale(0.8)
+        // this.glowTwo.setScale(0.8)
 
         this.zapperOne.flipY = true
 
@@ -90,6 +90,7 @@ class Zapper extends Phaser.GameObjects.Container {
         this.rotationSpeed = Phaser.Math.DegToRad(30)
         this.setRotation(Phaser.Math.DegToRad(this.degree))
 
+        this.setScale(Number(this.scene.game.config.width) / 2000)
         this.playAnimation()
     }
 

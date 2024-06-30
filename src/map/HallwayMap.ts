@@ -8,20 +8,8 @@ class HallwayMap extends MapTile {
 
         if (tileset1 && tileset2) {
             this.backgroundLayer =
-                this.map.createLayer('Tile Layer 1', [tileset1, tileset2], 0, 0) || null
-            this.colliderLayer =
-                this.map.createLayer('Collider', [tileset1, tileset2], 0, 0) || null
-            this.colliderLayer?.setCollisionByExclusion([-1], true)
+                this.map.createLayer('Tile Layer 1', [tileset1, tileset2]) || null
         }
-        if (this.backgroundLayer) {
-            this.add(this.backgroundLayer)
-            this.backgroundLayer.x = this.x
-            this.backgroundLayer.y = this.y
-        }
-
-        this.setDepth(-1)
-        this.colliderLayer?.setDepth(-2)
-        this.scene.add.existing(this)
     }
 }
 
