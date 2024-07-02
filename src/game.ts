@@ -3,13 +3,14 @@ import { Game as MainGame } from './scenes/Game'
 import { Game, Types } from 'phaser'
 import PreloadScene from './scenes/PreloadScene'
 import BootGameScene from './scenes/BootScene'
+import PauseScene from './scenes/PauseScene'
 
 const config: Types.Core.GameConfig = {
     type: Phaser.AUTO,
-    width: Number(innerWidth),
-    height: Number((innerWidth * 9) / 16),
+    width: Number(innerWidth) * devicePixelRatio,
+    height: Number((innerWidth * 9) / 16) * devicePixelRatio,
     parent: 'game-container',
-    backgroundColor: '#000000',
+    backgroundColor: '#FFFFFF',
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -20,7 +21,7 @@ const config: Types.Core.GameConfig = {
             debug: true,
         },
     },
-    scene: [BootGameScene, PreloadScene, MainGame],
+    scene: [BootGameScene, PreloadScene, MainGame, PauseScene],
 }
 
 export default new Game(config)

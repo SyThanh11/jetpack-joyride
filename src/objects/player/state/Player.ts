@@ -8,14 +8,13 @@ class Player extends Phaser.GameObjects.Container {
     private defaultHead: Phaser.Physics.Arcade.Sprite
     private defaultBody: Phaser.Physics.Arcade.Sprite
     private defaultJetpack: Phaser.Physics.Arcade.Sprite
-    private shadow: Phaser.Physics.Arcade.Image
     private bulletPool: Phaser.GameObjects.Group
     private cartouchePool: Phaser.GameObjects.Group
     private bulletEffect: Phaser.Physics.Arcade.Sprite
 
+    private moving = false
     private currentState: PlayerState
     private isFired = false
-    public score = 0
 
     constructor(
         scene: Phaser.Scene,
@@ -47,8 +46,6 @@ class Player extends Phaser.GameObjects.Container {
             0,
             'defaultJetpack'
         ).setOrigin(0, 0)
-        // this.shadow = new Phaser.Physics.Arcade.Image(this.scene, 15, 38, 'shadow')
-        // this.shadow.scaleX = 0.8
         this.bulletPool = this.scene.add.group({
             classType: Bullet,
             maxSize: 40,
@@ -64,7 +61,6 @@ class Player extends Phaser.GameObjects.Container {
         this.add(this.defaultBody)
         this.add(this.defaultJetpack)
         this.add(this.defaultHead)
-        // this.add(this.shadow)
         this.add(this.bulletEffect)
 
         this.bulletEffect.setScale(0.6)
@@ -119,17 +115,18 @@ class Player extends Phaser.GameObjects.Container {
         }
     }
 
+    public start(): void {
+        this.moving = true
+    }
+
     public preUpdate(): void {
+        if (!this.moving) {
+            return
+        }
+
         if (this.x >= Number(this.scene.game.config.width) / 3) {
             this.body.setVelocityX(0)
         }
-
-        // const scaleFactor = this.y / 1000 + 0.3
-
-        // this.shadow.scaleX = scaleFactor
-        // this.shadow.scaleY = scaleFactor
-
-        // this.shadow.y = -this.y + 40
 
         this.currentState.update(this)
 

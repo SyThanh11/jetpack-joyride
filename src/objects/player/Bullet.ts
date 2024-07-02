@@ -1,11 +1,8 @@
 class Bullet extends Phaser.Physics.Arcade.Sprite {
     private speed = 0
-    private bulletSplash: Phaser.Physics.Arcade.Sprite
 
     constructor(scene: Phaser.Scene) {
         super(scene, 0, 0, 'bullet')
-        this.bulletSplash = new Phaser.Physics.Arcade.Sprite(scene, 0, 0, 'bulletSplash')
-
         this.setOrigin(0.5, 0.5)
 
         this.setAngle(Phaser.Math.RND.pick([100, 90, 80]))

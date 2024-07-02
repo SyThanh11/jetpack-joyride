@@ -1,4 +1,3 @@
-import Player from '../../player/state/Player'
 import Zapper from './Zapper'
 
 class ZapperManager {
@@ -33,12 +32,6 @@ class ZapperManager {
         zapper.setActive(true)
         zapper.setVisible(true)
         return zapper
-    }
-
-    checkCollisionWithPlayer(player: Player) {
-        this.zapperPool.getChildren().forEach((zapper) => {
-            (zapper as Zapper).checkCollisionWithPlayer(player)
-        })
     }
 }
 

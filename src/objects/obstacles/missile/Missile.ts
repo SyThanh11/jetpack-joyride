@@ -53,8 +53,8 @@ class Missile extends Phaser.GameObjects.Container {
 
     preUpdate(time: number, deltaTime: number) {
         if (this.state === MissileState.ACTIVE) {
-            this.x -= (800 * deltaTime) / 1000
-            if (this.x + 100 < 0) {
+            this.x -= (1500 * deltaTime) / 1000
+            if (this.x + this.missile.width < 0) {
                 this.state = MissileState.DESTROYED
                 this.triggerMissileEffect()
             }
@@ -68,7 +68,8 @@ class Missile extends Phaser.GameObjects.Container {
             explosion.destroy()
         })
 
-        this.destroy()
+        this.setVisible(false)
+        this.setActive(false)
     }
 
     moveWithPlayer(playerY: number) {

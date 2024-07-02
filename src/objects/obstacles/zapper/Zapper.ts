@@ -75,10 +75,6 @@ class Zapper extends Phaser.GameObjects.Container {
         this.scene.physics.world.enable(this.zapperTwo)
 
         this.scene.add.existing(this)
-        // this.zapperOne.body?.setSize(32, 32)
-        // this.zapperTwo.body?.setSize(32, 32)
-        // this.glowOne.setScale(0.8)
-        // this.glowTwo.setScale(0.8)
 
         this.zapperOne.flipY = true
 
@@ -142,7 +138,6 @@ class Zapper extends Phaser.GameObjects.Container {
     }
 
     preUpdate(time: number, deltaTime: number): void {
-        this.x -= (200 * deltaTime) / 1000
         if (this.isRotate) {
             this.rotation += (this.rotationSpeed * deltaTime) / 1000
         }
@@ -155,11 +150,16 @@ class Zapper extends Phaser.GameObjects.Container {
     playAnimation() {
         this.zapperOne.play('zapper')
         this.zapperTwo.play('zapper')
-        this.glowOne.play('glow')
-        this.glowTwo.play('glow')
+        if (!this.isRotate) {
+            this.glowOne.play('glow')
+            this.glowTwo.play('glow')
+        } else {
+            this.glowOne.play('glowRotating')
+            this.glowTwo.play('glowRotating')
+        }
     }
 
-    checkCollisionWithPlayer(player: Player): void {
+    collisionWithPlayer(player: Player): void {
         this.scene.physics.add.collider(player, this.listColliders)
         this.scene.physics.add.collider(player, this.zapperOne)
         this.scene.physics.add.collider(player, this.zapperTwo)

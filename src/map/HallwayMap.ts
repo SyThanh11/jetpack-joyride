@@ -8,7 +8,7 @@ class HallwayMap extends MapTile {
 
         if (tileset1 && tileset2) {
             this.backgroundLayer =
-                this.map.createLayer('Tile Layer 1', [tileset1, tileset2]) || null
+                this.map.createLayer('Tile Layer 1', [tileset1, tileset2], 0, 0) || null
         }
     }
 }

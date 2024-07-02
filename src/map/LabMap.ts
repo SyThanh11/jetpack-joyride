@@ -10,6 +10,34 @@ class LabMap extends MapTile {
             this.backgroundLayer =
                 this.map.createLayer('Tile Layer 1', [tileset1, tileset2]) || null
         }
+
+        const coinsObjects = this.map.createFromObjects('Coin Object Layer', {
+            name: 'coin',
+            key: 'coin',
+            classType: Phaser.Physics.Arcade.Sprite,
+        })
+
+        coinsObjects.forEach((coinObject) => {
+            const coin = coinObject as Phaser.Physics.Arcade.Sprite
+            this.scene.physics.add.existing(coin)
+            coin.setPosition(coin.x, coin.y)
+            coin.setActive(true)
+            coin.play('coinEffect')
+            this.coinContainer.add(coin)
+        })
+
+        const missileTriggerObjects = this.map.createFromObjects('Trigger Missile', {
+            name: 'missile',
+            classType: Phaser.Physics.Arcade.Sprite,
+        })
+        missileTriggerObjects.forEach((missileTriggerObject) => {
+            const missileTrigger = missileTriggerObject as Phaser.Physics.Arcade.Sprite
+
+            this.scene.physics.add.existing(missileTrigger)
+            missileTrigger.setActive(false)
+            missileTrigger.setVisible(false)
+            this.missileContainer.add(missileTrigger)
+        })
     }
 }
 

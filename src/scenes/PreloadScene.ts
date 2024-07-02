@@ -83,6 +83,23 @@ class PreloadScene extends Scene {
             frameHeight: 512 / 4,
         })
 
+        this.load.spritesheet(
+            'zapEffectRotating',
+            'assets/Obstacles/Zapper/RotatingZappers/zapEffectsRotating.png',
+            {
+                frameWidth: 1024,
+                frameHeight: 468 / 4,
+            }
+        )
+        this.load.spritesheet(
+            'glowRotating',
+            'assets/Obstacles/Zapper/RotatingZappers/glowRotating.png',
+            {
+                frameWidth: 512 / 4,
+                frameHeight: 512 / 4,
+            }
+        )
+
         this.load.spritesheet('laser', 'assets/Obstacles/Laser/laser.png', {
             frameWidth: 512 / 4,
             frameHeight: 512 / 4,
@@ -99,6 +116,11 @@ class PreloadScene extends Scene {
             frameWidth: 256 / 4,
             frameHeight: 32,
         })
+
+        this.load.image('buttonPause', 'assets/UI/buttonPause.png')
+        this.load.image('controlButtonPause', 'assets/UI/buttonBackingCredit.png')
+
+        this.load.image('mainMenu', 'assets/Levels/Title/Objects/title_small.png')
 
         const gameWidth = Number(this.game.config.width)
         const gameHeight = Number(this.game.config.height)
@@ -155,15 +177,16 @@ class PreloadScene extends Scene {
         this.createAnimation('dieBodyTwo', 'defaultBody', 28, 31, 10)
         this.createAnimation('dieHeadTwo', 'defaultHead', 28, 31, 10)
         this.createAnimation('bulletFlash', 'bulletFlash', 0, 3, 10, -1)
-        this.createAnimation('bulletSplash', 'bulletSplash', 0, 3, 10)
+        this.createAnimation('bulletSplash', 'bulletSplash', 0, 3, 10, -1)
 
         this.createAnimation('missile', 'missile', 0, 3, 5)
         this.createAnimation('missileAlert', 'missileAlert', 0, 7, 5)
         this.createAnimation('missileEffect', 'missileEffect', 0, 3, 6, -1)
         this.createAnimation('missileExplosion', 'missileExplosion', 0, 7, 10)
 
-        this.createAnimation('zapper', 'zapper', 0, 3, 5)
+        this.createAnimation('zapper', 'zapper', 0, 3, 10, -1)
         this.createAnimation('glow', 'glow', 0, 15, 10, -1)
+        this.createAnimation('glowRotating', 'glowRotating', 0, 15, 10, -1)
 
         this.createAnimation('laser', 'laser', 0, 11, 10)
         this.createAnimation('laserEnergy', 'laserEnergy', 0, 7, 10)
