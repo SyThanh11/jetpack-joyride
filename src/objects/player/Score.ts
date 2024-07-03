@@ -68,8 +68,6 @@ class Score {
     }
 
     public addCoin(): void {
-        console.log('Hi')
-
         this.coin += 1
     }
 }

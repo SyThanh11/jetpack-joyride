@@ -28,12 +28,15 @@ class MissileManager {
         const missile: Missile = this.missilePool.get(x, y)
 
         missile.alpha = 1
-        missile.scale = 1.5
+        missile.scale = 3
         missile.setVisible(true)
         missile.setActive(true)
         missile.state = MissileState.ALERT
 
-        const missileAlert = scene.physics.add.sprite(x - 64, y, 'missileAlert').setOrigin(0, 0)
+        const missileAlert = scene.physics.add
+            .sprite(x - 64, y, 'missileAlert')
+            .setOrigin(0, 0)
+            .setScale(2)
         missileAlert.play('missileAlert')
         missile.missileAlert = missileAlert
 

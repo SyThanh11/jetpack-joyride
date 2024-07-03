@@ -41,6 +41,12 @@ class PreloadScene extends Scene {
             }
         )
 
+        this.load.tilemapTiledJSON('aquarium', 'assets/map/aquariumMap.tmj')
+        this.load.image('aquarium_assets', 'assets/atlas/aquarium_assets.png')
+
+        this.load.tilemapTiledJSON('cave', 'assets/map/caveMap.tmj')
+        this.load.image('cave_assets', 'assets/atlas/cave_assets.png')
+
         this.load.tilemapTiledJSON('coinMap', 'assets/map/coin.tmj')
         this.load.spritesheet('coin', 'assets/Entities/coin1_TVOS.png', {
             frameWidth: 32,

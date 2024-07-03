@@ -10,6 +10,7 @@ class GameOverState implements State {
         const gameOverUI = new GameOverUI(this.scene)
         gameOverUI.setTextScore(this.scene.score.getScore())
         gameOverUI.setTextBestScore(this.scene.score.getBestScore())
+        gameOverUI.setTextCoin(this.scene.score.getCoin())
 
         this.scene.mapManager.stop()
     }

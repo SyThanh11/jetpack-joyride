@@ -20,7 +20,7 @@ class Missile extends Phaser.GameObjects.Container {
     }
 
     init() {
-        this.missile = new Phaser.Physics.Arcade.Sprite(this.scene, 0, -2, 'missile', 0).setOrigin(
+        this.missile = new Phaser.Physics.Arcade.Sprite(this.scene, 0, -2, 'missile').setOrigin(
             0,
             0
         )
@@ -28,8 +28,7 @@ class Missile extends Phaser.GameObjects.Container {
             this.scene,
             18,
             -17,
-            'missileEffect',
-            0
+            'missileEffect'
         ).setOrigin(0, 0)
         this.missileAlert = null
         this.currentState = MissileState.ALERT
@@ -39,7 +38,6 @@ class Missile extends Phaser.GameObjects.Container {
 
         this.scene.physics.world.enable(this)
         this.body.setSize(70, 26)
-        this.setScale(1.5)
         this.setVisible(true)
         this.setActive(true)
         this.body.onCollide = true

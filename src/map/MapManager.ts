@@ -5,6 +5,8 @@ import MapTile from './MapTile'
 import RoomMap from './RoomMap'
 import LabMap from './LabMap'
 import Player from '../objects/player/state/Player'
+import AquariumMap from './AquariumMap'
+import CaveMap from './CaveMap'
 
 class MapManager {
     private mapPool: Phaser.GameObjects.Group
@@ -13,7 +15,7 @@ class MapManager {
     constructor(scene: Phaser.Scene) {
         this.mapPool = new Phaser.GameObjects.Group(scene, {
             classType: MapTile,
-            maxSize: 4,
+            maxSize: 6,
             runChildUpdate: true,
             createCallback: (obj: Phaser.GameObjects.GameObject) => {
                 const mapTile = obj as MapTile
@@ -26,10 +28,12 @@ class MapManager {
         const hallwayOneMap = new HallwayOneMap(scene, 0, 0)
         const roomMap = new RoomMap(scene, 0, 0)
         const labMap = new LabMap(scene, 0, 0)
+        const aquariumMap = new AquariumMap(scene, 0, 0)
+        const caveMap = new CaveMap(scene, 0, 0)
 
-        this.mapPool.addMultiple([hallwayMap, hallwayOneMap, labMap, roomMap])
+        this.mapPool.addMultiple([hallwayMap, hallwayOneMap, labMap, roomMap, aquariumMap, caveMap])
 
-        this.maps.push(hallwayOneMap, labMap, roomMap)
+        this.maps.push(hallwayOneMap, labMap, roomMap, aquariumMap, caveMap)
 
         this.arrangeMaps()
     }
@@ -55,7 +59,9 @@ class MapManager {
         if (firstMap.backgroundLayer?.width) {
             if (firstMap.x + firstMap.backgroundLayer?.width <= 0) {
                 const lastMap = this.maps[this.maps.length - 1]
-                firstMap.x = lastMap.x + firstMap.backgroundLayer?.width - 32 * 4
+                if (lastMap?.backgroundLayer?.width) {
+                    firstMap.x = lastMap.x + lastMap.backgroundLayer?.width - 32 * 4
+                }
                 this.maps.push(this.maps.shift() as MapTile)
             }
         }

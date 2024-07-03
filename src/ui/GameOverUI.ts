@@ -97,7 +97,7 @@ class GameOverUI extends Phaser.GameObjects.Container {
 
     public setTextCoin(coin: number): void {
         const formattedCoin = coin.toString().padStart(4, '0')
-        this.textCoin.setText(`${formattedCoin}`)
+        this.textCoin.setText(`COIN ${formattedCoin}`)
     }
 }
 

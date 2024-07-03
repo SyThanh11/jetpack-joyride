@@ -10,6 +10,8 @@ class MapTile extends Phaser.GameObjects.Container {
     public map: Phaser.Tilemaps.Tilemap
     public backgroundLayer: Phaser.Tilemaps.TilemapLayer | null = null
     public backgroundLayerTwo: Phaser.Tilemaps.TilemapLayer | null = null
+    public backgroundLayerThree: Phaser.Tilemaps.TilemapLayer | null = null
+    public backgroundLayerFour: Phaser.Tilemaps.TilemapLayer | null = null
 
     protected alarmContainer: Phaser.GameObjects.Container
 
@@ -38,6 +40,26 @@ class MapTile extends Phaser.GameObjects.Container {
         this.laserManager = new LaserManager(scene)
 
         this.init()
+
+        if (this.backgroundLayerFour) {
+            this.add(this.backgroundLayerFour)
+
+            this.backgroundLayerFour.displayHeight = Number(this.scene.game.config.height)
+            this.backgroundLayerFour.displayWidth = this.backgroundLayerFour.width
+
+            this.backgroundLayerFour.x = this.x
+            this.backgroundLayerFour.y = this.y
+        }
+
+        if (this.backgroundLayerThree) {
+            this.add(this.backgroundLayerThree)
+
+            this.backgroundLayerThree.displayHeight = Number(this.scene.game.config.height)
+            this.backgroundLayerThree.displayWidth = this.backgroundLayerThree.width
+
+            this.backgroundLayerThree.x = this.x
+            this.backgroundLayerThree.y = this.y
+        }
 
         if (this.backgroundLayer) {
             this.add(this.backgroundLayer)
@@ -70,6 +92,25 @@ class MapTile extends Phaser.GameObjects.Container {
 
     public init() {}
 
+    private setupLayers(): void {
+        const layers = [
+            this.backgroundLayer,
+            this.backgroundLayerTwo,
+            this.backgroundLayerThree,
+            this.backgroundLayerFour,
+        ]
+
+        layers.forEach((layer) => {
+            if (layer) {
+                this.add(layer)
+                layer.displayHeight = Number(this.scene.game.config.height)
+                layer.displayWidth = layer.width
+                layer.x = this.x
+                layer.y = this.y
+            }
+        })
+    }
+
     public preUpdate(time: number, deltaTime: number): void {
         if (this.backgroundLayer) {
             this.backgroundLayer.x = this.x
@@ -77,6 +118,13 @@ class MapTile extends Phaser.GameObjects.Container {
         if (this.backgroundLayerTwo) {
             this.backgroundLayerTwo.x = this.x
         }
+        if (this.backgroundLayerThree) {
+            this.backgroundLayerThree.x = this.x
+        }
+        if (this.backgroundLayerFour) {
+            this.backgroundLayerFour.x = this.x
+        }
+
         this.alarmContainer.x = this.x
         this.coinContainer.x = this.x
         this.zapperContainer.x = this.x

@@ -25,7 +25,7 @@ class LabMap extends MapTile {
             const coin = coinObject as Phaser.Physics.Arcade.Sprite
             this.scene.physics.add.existing(coin)
             coin.setPosition(coin.x, coin.y * scaleFactor)
-            coin.setTint(0xff0000)
+            coin.setTint(0xfbd7f9)
             coin.setActive(true)
             coin.play('coinEffect')
             this.coinContainer.add(coin)

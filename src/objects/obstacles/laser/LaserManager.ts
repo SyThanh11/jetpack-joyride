@@ -37,8 +37,8 @@ class LaserManager {
     }
 
     public spawnLasers(scene: Phaser.Scene) {
-        for (let i = 0; i < 5; i++) {
-            this.spawnLaser(0, Number(scene.game.config.height) - i * 100 - 400)
+        for (let i = 0; i < 4; i++) {
+            this.spawnLaser(0, Number(scene.game.config.height) / 2 + i * 100)
         }
     }
 

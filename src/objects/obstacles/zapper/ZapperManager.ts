@@ -20,6 +20,10 @@ class ZapperManager {
             new Zapper(scene, 120, false, 180, -100, -100),
             new Zapper(scene, 100, false, -60, -100, -100),
             new Zapper(scene, 120, true, 90, -100, -100),
+            new Zapper(scene, 200, false, 90, -100, -100),
+            new Zapper(scene, 160, false, 180, -100, -100),
+            new Zapper(scene, 180, false, -30, -100, -100),
+            new Zapper(scene, 150, true, 90, -100, -100),
         ])
     }
 
