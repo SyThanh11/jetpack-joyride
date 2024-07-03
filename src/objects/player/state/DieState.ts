@@ -1,3 +1,5 @@
+import { Game } from '../../../scenes/Game'
+import GameOverState from '../../../scenes/state/GameOverState'
 import Player from './Player'
 import PlayerState from './PlayerState'
 
@@ -21,6 +23,11 @@ class DieState extends PlayerState {
         })
 
         player.body.setImmovable(false)
+
+        const gameScene = player.scene as Game
+        gameScene.score.saveScore()
+        gameScene.score.saveCoin()
+        gameScene.stateMachine.changeState(new GameOverState(gameScene))
     }
 
     private onHitGround(player: Player): void {

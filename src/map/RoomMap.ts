@@ -10,6 +10,20 @@ class RoomMap extends MapTile {
             this.backgroundLayer =
                 this.map.createLayer('Tile Layer 1', [tileset1, tileset2]) || null
         }
+
+        const laserTriggerObjects = this.map.createFromObjects('Trigger Laser', {
+            name: 'laser',
+            classType: Phaser.Physics.Arcade.Sprite,
+        })
+
+        laserTriggerObjects.forEach((laserTriggerObject) => {
+            const laserTrigger = laserTriggerObject as Phaser.Physics.Arcade.Sprite
+
+            this.scene.physics.add.existing(laserTrigger)
+            laserTrigger.setActive(false)
+            laserTrigger.setVisible(false)
+            this.laserContainer.add(laserTrigger)
+        })
     }
 }
 

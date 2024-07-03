@@ -11,6 +11,10 @@ class LabMap extends MapTile {
                 this.map.createLayer('Tile Layer 1', [tileset1, tileset2]) || null
         }
 
+        const gameWidth = Number(this.scene.game.config.width)
+        const gameHeight = Number(this.scene.game.config.height)
+        const scaleFactor = Math.min(gameWidth, gameHeight) / 1000
+
         const coinsObjects = this.map.createFromObjects('Coin Object Layer', {
             name: 'coin',
             key: 'coin',
@@ -20,7 +24,8 @@ class LabMap extends MapTile {
         coinsObjects.forEach((coinObject) => {
             const coin = coinObject as Phaser.Physics.Arcade.Sprite
             this.scene.physics.add.existing(coin)
-            coin.setPosition(coin.x, coin.y)
+            coin.setPosition(coin.x, coin.y * scaleFactor)
+            coin.setTint(0xff0000)
             coin.setActive(true)
             coin.play('coinEffect')
             this.coinContainer.add(coin)
@@ -30,6 +35,7 @@ class LabMap extends MapTile {
             name: 'missile',
             classType: Phaser.Physics.Arcade.Sprite,
         })
+
         missileTriggerObjects.forEach((missileTriggerObject) => {
             const missileTrigger = missileTriggerObject as Phaser.Physics.Arcade.Sprite
 

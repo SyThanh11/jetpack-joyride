@@ -101,8 +101,8 @@
                  "type":"",
                  "visible":true,
                  "width":192,
-                 "x":1472,
-                 "y":321.69696969697
+                 "x":1597.33333333333,
+                 "y":440.363636363636
                 }, 
                 {
                  "height":32,
@@ -112,8 +112,8 @@
                  "type":"",
                  "visible":true,
                  "width":256,
-                 "x":1664,
-                 "y":640
+                 "x":1285.33333333333,
+                 "y":641.333333333333
                 }, 
                 {
                  "height":192,
@@ -123,8 +123,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":2080,
-                 "y":384
+                 "x":2017.33333333333,
+                 "y":557.333333333333
                 }, 
                 {
                  "height":192,
@@ -134,8 +134,63 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":2335.51515151515,
-                 "y":473.69696969697
+                 "x":2400.84848484848,
+                 "y":305.69696969697
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":8,
+         "name":"Alarm Light Layer",
+         "objects":[
+                {
+                 "height":64,
+                 "id":51,
+                 "name":"alarm",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":192,
+                 "y":318.666666666667
+                }, 
+                {
+                 "height":64,
+                 "id":52,
+                 "name":"alarm",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":381,
+                 "y":321.833333333333
+                }, 
+                {
+                 "height":64,
+                 "id":53,
+                 "name":"alarm",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":1342.83333333333,
+                 "y":322.417
+                }, 
+                {
+                 "height":64,
+                 "id":54,
+                 "name":"alarm",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":1859.83333333333,
+                 "y":328.249666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -627,8 +682,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":8,
- "nextobjectid":50,
+ "nextlayerid":9,
+ "nextobjectid":55,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
@@ -670,6 +725,32 @@
          "name":"coin1_TVOS",
          "spacing":0,
          "tilecount":8,
+         "tileheight":32,
+         "tilewidth":32
+        }, 
+        {
+         "columns":8,
+         "firstgid":2057,
+         "image":"..\/Levels\/Hallway1\/alarmLightGlowOpt_TVOS.png",
+         "imageheight":256,
+         "imagewidth":256,
+         "margin":0,
+         "name":"alarmLightGlowOpt_TVOS",
+         "spacing":0,
+         "tilecount":64,
+         "tileheight":32,
+         "tilewidth":32
+        }, 
+        {
+         "columns":32,
+         "firstgid":2121,
+         "image":"..\/Levels\/Hallway1\/alarmLightGlow_TVOS.png",
+         "imageheight":1024,
+         "imagewidth":1024,
+         "margin":0,
+         "name":"alarmLightGlow_TVOS",
+         "spacing":0,
+         "tilecount":1024,
          "tileheight":32,
          "tilewidth":32
         }],

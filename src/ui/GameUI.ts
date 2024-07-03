@@ -14,12 +14,12 @@ class GameUI extends Phaser.GameObjects.Container {
         const gameWidth = Number(scene.game.config.width)
         const gameHeight = Number(scene.game.config.height)
 
-        const baseFontSize = gameHeight / 30
+        const baseFontSize = gameWidth / 50
         const fontSize = Math.floor(baseFontSize)
-        const smallFontSize = Math.floor(baseFontSize)
-        const coinFontSize = Math.floor(baseFontSize)
+        const smallFontSize = Math.floor(baseFontSize * 0.8)
+        const coinFontSize = Math.floor(baseFontSize * 0.8)
 
-        this.textScore = scene.add.text(16, gameHeight / 8, `0000 M`, {
+        this.textScore = scene.add.text(gameWidth / 50, gameHeight / 8, `0000 M`, {
             fontSize: `${fontSize}px`,
             color: '#FFFFFF',
             fontFamily: 'Arial',
@@ -27,9 +27,9 @@ class GameUI extends Phaser.GameObjects.Container {
         })
 
         this.textBestScore = scene.add.text(
-            16,
+            gameWidth / 50,
             gameHeight / 6,
-            `BEST ${localStorage.getItem('bestScore') || 0}`,
+            `BEST ${localStorage.getItem('bestScore') || '0000'}`,
             {
                 fontSize: `${smallFontSize}px`,
                 color: '#FFFFFF',
@@ -37,17 +37,20 @@ class GameUI extends Phaser.GameObjects.Container {
             }
         )
 
-        this.textCoin = scene.add.text(50, gameHeight / 4.8, `0000`, {
+        this.textCoin = scene.add.text(gameWidth / 25, gameHeight / 4.9, `0000`, {
             fontSize: `${coinFontSize}px`,
             color: 'yellow',
             fontFamily: 'Arial',
         })
 
-        this.imageCoin = scene.add.image(30, gameHeight / 4.45, 'coin')
+        this.imageCoin = scene.add.image(gameWidth / 38, gameHeight / 4.6, 'coin')
+
+        const scaleFactor = Math.min(gameWidth, gameHeight) / 1000
+        this.imageCoin.setScale(scaleFactor)
 
         this.button = new Button(
             scene,
-            gameWidth / 1.02,
+            gameWidth - gameWidth / 50,
             gameHeight / 6.5,
             'buttonPause',
             50,
@@ -61,7 +64,7 @@ class GameUI extends Phaser.GameObjects.Container {
                 color: '#000000',
                 fontFamily: 'Arial',
             }
-        ).setScale(0.8)
+        ).setScale(scaleFactor)
 
         this.add(this.textScore)
         this.add(this.textBestScore)

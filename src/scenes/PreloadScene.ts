@@ -9,15 +9,37 @@ class PreloadScene extends Scene {
         this.load.tilemapTiledJSON('startHallway', 'assets/map/hallway.tmj')
         this.load.image('hallway', 'assets/Levels/Title/titleFG_1_TVOS.png')
         this.load.image('hallway2', 'assets/Levels/Title/titleFG_2_TVOS.png')
+        this.load.image('alarmLight_TVOS', 'assets/Levels/Title/alarmLight_TVOS.png')
+        this.load.image('doNotTouchSign_TVOS', 'assets/Levels/Title/doNotTouchSign_TVOS.png')
+        this.load.image('title_light_TVOS', 'assets/Levels/Title/title_light_TVOS.png')
+        this.load.image('lightEffect2', 'assets/Levels/Title/lightEffect2.png')
+
         this.load.tilemapTiledJSON('room', 'assets/map/room.tmj')
         this.load.image('room1FG_1_TVOS', 'assets/Levels/Room1/room1FG_1_TVOS.png')
         this.load.image('room1FG_2_TVOS', 'assets/Levels/Room1/room1FG_2_TVOS.png')
         this.load.tilemapTiledJSON('lab', 'assets/map/lab.tmj')
         this.load.image('lab1FG_1_TVOS', 'assets/Levels/lab1/lab1FG_1_TVOS.png')
         this.load.image('lab1FG_2_TVOS', 'assets/Levels/lab1/lab1FG_2_TVOS.png')
+
         this.load.tilemapTiledJSON('hallway1', 'assets/map/hallway1.tmj')
         this.load.image('hallway1FG_1_TVOS', 'assets/Levels/Hallway1/hallway1FG_1_TVOS.png')
         this.load.image('hallway1FG_2_TVOS', 'assets/Levels/Hallway1/hallway1FG_2_TVOS.png')
+        this.load.spritesheet(
+            'alarmLightGlowOpt_TVOS',
+            'assets/Levels/Hallway1/alarmLightGlowOpt_TVOS.png',
+            {
+                frameWidth: 256 / 2,
+                frameHeight: 256 / 2,
+            }
+        )
+        this.load.spritesheet(
+            'alarmLightGlow_TVOS',
+            'assets/Levels/Hallway1/alarmLightGlow_TVOS.png',
+            {
+                frameWidth: 1024 / 2,
+                frameHeight: 1024 / 4,
+            }
+        )
 
         this.load.tilemapTiledJSON('coinMap', 'assets/map/coin.tmj')
         this.load.spritesheet('coin', 'assets/Entities/coin1_TVOS.png', {
@@ -196,6 +218,9 @@ class PreloadScene extends Scene {
 
         this.createAnimation('coinEffect', 'coin', 0, 7, 8, -1)
         this.createAnimation('collectCoin', 'collectCoin', 0, 3, 20)
+
+        this.createAnimation('alarmLightGlowOpt_TVOS', 'alarmLightGlowOpt_TVOS', 0, 3, 10, -1)
+        this.createAnimation('alarmLightGlow_TVOS', 'alarmLightGlow_TVOS', 0, 5, 10, -1)
 
         this.scene.start('Game')
     }

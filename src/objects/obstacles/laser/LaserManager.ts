@@ -36,7 +36,13 @@ class LaserManager {
         return laser
     }
 
-    public checkCollisionWithPlayer(player: Player): void {
+    public spawnLasers(scene: Phaser.Scene) {
+        for (let i = 0; i < 5; i++) {
+            this.spawnLaser(0, Number(scene.game.config.height) - i * 100 - 400)
+        }
+    }
+
+    public collisionWithPlayer(player: Player): void {
         this.laserPool.getChildren().forEach((laser) => {
             (laser as Laser).checkCollisionWithPlayer(player)
         })

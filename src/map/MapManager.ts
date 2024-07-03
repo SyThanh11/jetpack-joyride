@@ -87,6 +87,13 @@ class MapManager {
         })
     }
 
+    public stop(): void {
+        this.mapPool.getChildren().forEach((map) => {
+            const mapTile = map as MapTile
+            mapTile.stop()
+        })
+    }
+
     public collisionWithCoin(player: Player) {
         this.mapPool.getChildren().forEach((map) => {
             (map as MapTile).collisionWithCoin(player)
@@ -108,6 +115,18 @@ class MapManager {
     public missileCollisionWithPlayer(player: Player) {
         this.mapPool.getChildren().forEach((map) => {
             (map as MapTile).missileCollisionWithPlayer(player)
+        })
+    }
+
+    public triggerLasers(player: Player) {
+        this.mapPool.getChildren().forEach((map) => {
+            (map as MapTile).triggerLasers(player)
+        })
+    }
+
+    public laserCollisionWithPlayer(player: Player) {
+        this.mapPool.getChildren().forEach((map) => {
+            (map as MapTile).laserCollisionWithPlayer(player)
         })
     }
 }

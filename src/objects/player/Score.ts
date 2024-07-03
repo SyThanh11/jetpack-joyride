@@ -31,7 +31,11 @@ class Score {
     }
 
     public getBestScore(): number {
-        return this.bestScore
+        const bestScore = localStorage.getItem('bestScore')
+        if (bestScore === null) {
+            return 0
+        }
+        return Number(bestScore)
     }
 
     public saveScore(): void {
@@ -44,6 +48,7 @@ class Score {
             }
         }
         localStorage.setItem('bestScore', bestScore)
+        this.bestScore = Number(bestScore)
     }
 
     public getCoin(): number {
@@ -63,6 +68,8 @@ class Score {
     }
 
     public addCoin(): void {
+        console.log('Hi')
+
         this.coin += 1
     }
 }

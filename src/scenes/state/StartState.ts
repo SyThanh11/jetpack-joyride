@@ -1,4 +1,6 @@
 import MapManager from '../../map/MapManager'
+import Laser from '../../objects/obstacles/laser/Laser'
+import LaserManager from '../../objects/obstacles/laser/LaserManager'
 import MissileManager from '../../objects/obstacles/missile/MissileManager'
 import ZapperManager from '../../objects/obstacles/zapper/ZapperManager'
 import Player from '../../objects/player/state/Player'
@@ -17,11 +19,17 @@ class StartState implements State {
         const gameHeight = Number(this.scene.game.config.height)
         this.scene.gameStarted = false
 
-        this.scene.title = this.scene.add.image(gameWidth / 2, gameHeight / 2.5, 'mainMenu')
+        const titleWidth = gameWidth * 0.5
+        const titleHeight = titleWidth * (9 / 16)
+
+        this.scene.title = this.scene.add
+            .image(gameWidth / 2, gameHeight / 2.5, 'mainMenu')
+            .setDepth(1)
+        this.scene.title.setDisplaySize(titleWidth, titleHeight)
 
         const textStyle = {
             fontFamily: 'Arial',
-            fontSize: '32px',
+            fontSize: `${gameWidth * 0.02}px`,
             color: '#FFFFFF',
         }
         this.scene.blinkingText = this.scene.add
@@ -41,6 +49,7 @@ class StartState implements State {
         this.scene.player = new Player(this.scene, gameWidth / 3, gameHeight / 1.45).setDepth(2)
         this.scene.zapperManager = new ZapperManager(this.scene)
         this.scene.missileManager = new MissileManager(this.scene)
+        this.scene.laserManager = new LaserManager(this.scene)
 
         this.scene.mapManager = new MapManager(this.scene)
 
@@ -48,25 +57,13 @@ class StartState implements State {
         this.scene.mapManager.zapperCollisionWithPlayer(this.scene.player)
         this.scene.mapManager.triggerMissiles(this.scene.player)
         this.scene.mapManager.missileCollisionWithPlayer(this.scene.player)
-
-        // this.laserManager = new LaserManager(this)
-        // this.laserManager.checkCollisionWithPlayer(this.player)
-
-        // Events.on('laserVisible', (laser: Laser) => {
-        //     laser.startAnimations()
-        // })
-        // this.time.addEvent({
-        //     delay: 3000,
-        //     callback: () => {
-        //         this.laserManager.spawnLaser(0, Phaser.Math.Between(200, 600))
-        //     },
-        //     callbackScope: this,
-        //     loop: true,
-        // })
+        this.scene.mapManager.triggerLasers(this.scene.player)
+        this.scene.mapManager.laserCollisionWithPlayer(this.scene.player)
 
         this.scene.input.on('pointerdown', () => {
             if (!this.scene.gameStarted) {
                 this.scene.score.setScore(0)
+                this.scene.score.setCoin(0)
                 this.scene.stateMachine.changeState(new PlayState(this.scene))
             }
         })
@@ -74,6 +71,10 @@ class StartState implements State {
         Events.on('addCoin', () => {
             this.scene.score.addCoin()
             this.scene.gameUI.setTextCoin(this.scene.score.getCoin())
+        })
+
+        Events.on('laserVisible', (laser: Laser) => {
+            laser.startAnimations()
         })
     }
 
