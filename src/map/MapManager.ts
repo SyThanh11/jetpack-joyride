@@ -70,7 +70,7 @@ class MapManager {
     public reset(): void {
         this.mapPool.getChildren().forEach((map) => {
             const mapEle = map as MapTile
-
+            mapEle.reset()
             mapEle.setVisible(false)
             mapEle.setActive(false)
         })

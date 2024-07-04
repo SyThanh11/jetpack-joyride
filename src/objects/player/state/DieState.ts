@@ -4,26 +4,38 @@ import Player from './Player'
 import PlayerState from './PlayerState'
 
 class DieState extends PlayerState {
+    private heightOrigin: number
+
     enter(player: Player): void {
         player.playerHurt?.play()
         player.playAnimation('dieBody', 'dieHead')
         player.remove(player.getJetpack(), true)
 
-        player.body.setGravityY(1000)
-        player.body.setBounce(0.5)
-        player.body.setCollideWorldBounds(true)
-        player.body.onCollide = false
+        this.heightOrigin = player.body.height
 
-        player.getDefaultBody().on('animationcomplete-dieBody', () => {
-            player.playAnimation('dieBodyTwo', 'dieHeadTwo')
-            player.rotation = Phaser.Math.DegToRad(-90)
+        player.body.setGravityY(0)
+        player.body.setSize(0, 0)
 
-            player.scene.physics.world.on('worldbounds', () => {
-                this.onHitGround(player)
-            })
+        const initialBounceForce = -200
+        player.body.setVelocityY(initialBounceForce)
+
+        const bounceDuration = 100
+        const bounceDistanceX = 100
+        const bounceEase = Phaser.Math.Easing.Quadratic.Out
+
+        player.scene.tweens.add({
+            targets: player.body,
+            y: player.y - 40,
+            x: player.x + bounceDistanceX,
+            duration: bounceDuration,
+            ease: bounceEase,
+            onComplete: () => {
+                player.body.setImmovable(false)
+                player.playAnimation('dieBodyTwo', 'dieHeadTwo')
+                player.setAngle(90)
+                player.body.setGravityY(1000)
+            },
         })
-
-        player.body.setImmovable(false)
 
         const gameScene = player.scene as Game
         gameScene.score.saveScore()
@@ -31,10 +43,10 @@ class DieState extends PlayerState {
         gameScene.stateMachine.changeState(new GameOverState(gameScene))
     }
 
-    private onHitGround(player: Player): void {
-        if (player.body.onFloor()) {
-            player.body.setBounce(0.2)
-            player.body.setVelocityX(0)
+    update(player: Player): void {
+        if (player.y - this.heightOrigin / 2 >= Number(player.scene.game.config.height) / 1.45) {
+            player.body.setGravityY(0)
+            player.body.setVelocity(0)
         }
     }
 }

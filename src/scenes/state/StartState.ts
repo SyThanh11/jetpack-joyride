@@ -1,11 +1,4 @@
-import MapManager from '../../map/MapManager'
-import Laser from '../../objects/obstacles/laser/Laser'
-import LaserManager from '../../objects/obstacles/laser/LaserManager'
-import MissileManager from '../../objects/obstacles/missile/MissileManager'
-import ZapperManager from '../../objects/obstacles/zapper/ZapperManager'
-import Player from '../../objects/player/state/Player'
-import GameUI from '../../ui/GameUI'
-import { Events, Game } from '../Game'
+import { Game } from '../Game'
 import State from './GamePlayState'
 import PlayState from './PlayState'
 
@@ -45,43 +38,12 @@ class StartState implements State {
             yoyo: true,
         })
 
-        this.scene.gameUI = new GameUI(this.scene)
-        this.scene.player = new Player(this.scene, gameWidth / 3, gameHeight / 1.45).setDepth(2)
-        this.scene.zapperManager = new ZapperManager(this.scene)
-        this.scene.missileManager = new MissileManager(this.scene)
-        this.scene.laserManager = new LaserManager(this.scene)
-
-        this.scene.mapManager = new MapManager(this.scene)
-
-        this.scene.mapManager.collisionWithCoin(this.scene.player)
-        this.scene.mapManager.zapperCollisionWithPlayer(this.scene.player)
-        this.scene.mapManager.triggerMissiles(this.scene.player)
-        this.scene.mapManager.missileCollisionWithPlayer(this.scene.player)
-        this.scene.mapManager.triggerLasers(this.scene.player)
-        this.scene.mapManager.laserCollisionWithPlayer(this.scene.player)
-
-        if (!this.scene.music) {
-            this.scene.music = this.scene.sound.add('menuAmb')
-            this.scene.music.play({ loop: true })
-        }
-
         this.scene.input.on('pointerdown', () => {
             if (!this.scene.gameStarted) {
                 this.scene.score.setScore(0)
                 this.scene.score.setCoin(0)
                 this.scene.stateMachine.changeState(new PlayState(this.scene))
             }
-        })
-
-        Events.on('addCoin', () => {
-            const music = this.scene.sound.add('coinPickUpThree')
-            music.play()
-            this.scene.score.addCoin()
-            this.scene.gameUI.setTextCoin(this.scene.score.getCoin())
-        })
-
-        Events.on('laserVisible', (laser: Laser) => {
-            laser.startAnimations()
         })
     }
 

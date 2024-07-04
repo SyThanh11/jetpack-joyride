@@ -73,7 +73,10 @@ class MissileManager {
     public collisionWithPlayer(player: Player, scene: Phaser.Scene) {
         this.missilePool.getChildren().forEach((missileEle) => {
             const missile = missileEle as Missile
-            scene.physics.add.collider(player, missile, missile.triggerMissileEffect)
+            scene.physics.add.collider(player, missile, () => {
+                player.playAnimation('fireBody', 'fireHead')
+                missile.triggerMissileEffect()
+            })
         })
     }
 

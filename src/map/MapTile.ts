@@ -92,25 +92,6 @@ class MapTile extends Phaser.GameObjects.Container {
 
     public init() {}
 
-    private setupLayers(): void {
-        const layers = [
-            this.backgroundLayer,
-            this.backgroundLayerTwo,
-            this.backgroundLayerThree,
-            this.backgroundLayerFour,
-        ]
-
-        layers.forEach((layer) => {
-            if (layer) {
-                this.add(layer)
-                layer.displayHeight = Number(this.scene.game.config.height)
-                layer.displayWidth = layer.width
-                layer.x = this.x
-                layer.y = this.y
-            }
-        })
-    }
-
     public preUpdate(time: number, deltaTime: number): void {
         if (this.backgroundLayer) {
             this.backgroundLayer.x = this.x
@@ -214,6 +195,14 @@ class MapTile extends Phaser.GameObjects.Container {
 
     public stop(): void {
         this.moving = false
+    }
+
+    public reset(): void {
+        this.resetObjects()
+        this.moving = false
+        if (this.backgroundLayer) {
+            this.backgroundLayer.x = this.x
+        }
     }
 }
 
