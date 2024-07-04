@@ -7,7 +7,7 @@ class Cartouche extends Phaser.Physics.Arcade.Sprite {
         this.setOrigin(0.5, 0.5)
         this.setScale(0.5)
         this.setAngle(Phaser.Math.RND.pick([70, 80, 65]))
-        this.speed = Phaser.Math.GetSpeed(600, 1)
+        this.speed = Phaser.Math.GetSpeed(1000, 1)
     }
 
     public fire(x: number, y: number): void {

@@ -48,19 +48,22 @@ class MapManager {
             map.setActive(true)
             map.setVisible(true)
 
-            if (map.backgroundLayer) {
-                x += map.backgroundLayer.width - 32 * 4
+            const backgroundLayer = map.getBackgroundLayer()
+            if (backgroundLayer && backgroundLayer.width) {
+                x += backgroundLayer.width - 32 * 4
             }
         })
     }
 
     public update(): void {
         const firstMap = this.maps[0]
-        if (firstMap.backgroundLayer?.width) {
-            if (firstMap.x + firstMap.backgroundLayer?.width <= 0) {
+        const firstMapBackgroundLayer = firstMap?.getBackgroundLayer()
+        if (firstMapBackgroundLayer && firstMapBackgroundLayer.width) {
+            if (firstMap.x + firstMapBackgroundLayer.width <= 0) {
                 const lastMap = this.maps[this.maps.length - 1]
-                if (lastMap?.backgroundLayer?.width) {
-                    firstMap.x = lastMap.x + lastMap.backgroundLayer?.width - 32 * 4
+                const lastMapBackgroundLayer = lastMap?.getBackgroundLayer()
+                if (lastMapBackgroundLayer && lastMapBackgroundLayer.width) {
+                    firstMap.x = lastMap.x + lastMapBackgroundLayer.width - 32 * 4
                 }
                 this.maps.push(this.maps.shift() as MapTile)
             }

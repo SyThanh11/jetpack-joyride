@@ -104,6 +104,10 @@ class Player extends Phaser.GameObjects.Container {
         return this.defaultBody
     }
 
+    public getbulletEffect(): Phaser.Physics.Arcade.Sprite {
+        return this.bulletEffect
+    }
+
     public handlePointerDown(): void {
         this.currentState.handlePointerDown(this)
 

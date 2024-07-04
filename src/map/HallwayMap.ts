@@ -25,24 +25,7 @@ class HallwayMap extends MapTile {
                 ) || null
         }
 
-        const gameWidth = Number(this.scene.game.config.width)
-        const gameHeight = Number(this.scene.game.config.height)
-        const scaleFactor = Math.min(gameWidth, gameHeight) / 1000
-
-        const alarmObjects = this.map.createFromObjects('Alarm Light Layer', {
-            name: 'alarm',
-            key: 'alarmLightGlow_TVOS',
-            classType: Phaser.Physics.Arcade.Sprite,
-        })
-
-        alarmObjects.forEach((alarmObject) => {
-            const alarm = alarmObject as Phaser.Physics.Arcade.Sprite
-            alarm.setPosition(alarm.x, alarm.y * scaleFactor)
-            alarm.setScale(scaleFactor)
-            alarm.play('alarmLightGlow_TVOS')
-            this.scene.physics.add.existing(alarm)
-            this.alarmContainer.add(alarm)
-        })
+        this.havingAlarmTile = true
     }
 }
 

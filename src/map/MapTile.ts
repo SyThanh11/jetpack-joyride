@@ -7,14 +7,13 @@ import MissileManager from '../objects/obstacles/missile/MissileManager'
 import LaserManager from '../objects/obstacles/laser/LaserManager'
 
 class MapTile extends Phaser.GameObjects.Container {
-    public map: Phaser.Tilemaps.Tilemap
-    public backgroundLayer: Phaser.Tilemaps.TilemapLayer | null = null
-    public backgroundLayerTwo: Phaser.Tilemaps.TilemapLayer | null = null
-    public backgroundLayerThree: Phaser.Tilemaps.TilemapLayer | null = null
-    public backgroundLayerFour: Phaser.Tilemaps.TilemapLayer | null = null
+    protected map: Phaser.Tilemaps.Tilemap
+    protected backgroundLayer: Phaser.Tilemaps.TilemapLayer | null = null
+    protected backgroundLayerTwo: Phaser.Tilemaps.TilemapLayer | null = null
+    protected backgroundLayerThree: Phaser.Tilemaps.TilemapLayer | null = null
+    protected backgroundLayerFour: Phaser.Tilemaps.TilemapLayer | null = null
 
     protected alarmContainer: Phaser.GameObjects.Container
-
     protected coinContainer: Phaser.GameObjects.Container
     protected zapperContainer: Phaser.GameObjects.Container
     protected missileContainer: Phaser.GameObjects.Container
@@ -24,7 +23,12 @@ class MapTile extends Phaser.GameObjects.Container {
     protected missileManager: MissileManager
     protected laserManager: LaserManager
 
-    private moving = false
+    protected moving = false
+    protected havingCoinTile = false
+    protected havingMissileTile = false
+    protected havingZaggerTile = false
+    protected havingLaserTile = false
+    protected havingAlarmTile = false
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y)
@@ -40,45 +44,103 @@ class MapTile extends Phaser.GameObjects.Container {
         this.laserManager = new LaserManager(scene)
 
         this.init()
+        this.setupBackgroundLayers()
 
-        if (this.backgroundLayerFour) {
-            this.add(this.backgroundLayerFour)
+        const gameWidth = Number(this.scene.game.config.width)
+        const gameHeight = Number(this.scene.game.config.height)
+        const scaleFactor = Math.min(gameWidth, gameHeight) / 1000
 
-            this.backgroundLayerFour.displayHeight = Number(this.scene.game.config.height)
-            this.backgroundLayerFour.displayWidth = this.backgroundLayerFour.width
+        if (this.havingCoinTile) {
+            const coinsObjects = this.map.createFromObjects('Coin Object Layer', {
+                name: 'coin',
+                key: 'coin',
+                classType: Phaser.Physics.Arcade.Sprite,
+            })
 
-            this.backgroundLayerFour.x = this.x
-            this.backgroundLayerFour.y = this.y
+            coinsObjects.forEach((coinObject) => {
+                const coin = coinObject as Phaser.Physics.Arcade.Sprite
+                this.scene.physics.add.existing(coin)
+                coin.setPosition(coin.x, coin.y * scaleFactor)
+                coin.setActive(true)
+
+                const tintColors = [0x00c0ff, 0xffffff]
+                const randomColor = Phaser.Math.RND.pick(tintColors)
+                coin.setTint(randomColor)
+
+                coin.play('coinEffect')
+                this.coinContainer.add(coin)
+            })
         }
 
-        if (this.backgroundLayerThree) {
-            this.add(this.backgroundLayerThree)
+        if (this.havingMissileTile) {
+            const missileTriggerObjects = this.map.createFromObjects('Trigger Missile', {
+                name: 'missile',
+                classType: Phaser.Physics.Arcade.Sprite,
+            })
 
-            this.backgroundLayerThree.displayHeight = Number(this.scene.game.config.height)
-            this.backgroundLayerThree.displayWidth = this.backgroundLayerThree.width
+            missileTriggerObjects.forEach((missileTriggerObject) => {
+                const missileTrigger = missileTriggerObject as Phaser.Physics.Arcade.Sprite
 
-            this.backgroundLayerThree.x = this.x
-            this.backgroundLayerThree.y = this.y
+                this.scene.physics.add.existing(missileTrigger)
+                missileTrigger.setActive(false)
+                missileTrigger.setVisible(false)
+                this.missileContainer.add(missileTrigger)
+            })
         }
 
-        if (this.backgroundLayer) {
-            this.add(this.backgroundLayer)
+        if (this.havingZaggerTile) {
+            const zaggerObjects = this.map.createFromObjects('Zagger Object Layer', {
+                name: 'zagger',
+                classType: Phaser.Physics.Arcade.Sprite,
+            })
 
-            this.backgroundLayer.displayHeight = Number(this.scene.game.config.height)
-            this.backgroundLayer.displayWidth = this.backgroundLayer.width
-
-            this.backgroundLayer.x = this.x
-            this.backgroundLayer.y = this.y
+            zaggerObjects.forEach((zaggerObject) => {
+                const zagger = zaggerObject as Phaser.Physics.Arcade.Sprite
+                zagger.setVisible(false)
+                if (zagger) {
+                    const spawnedZagger = this.zapperManager.spawnZapper(
+                        zagger.x,
+                        zagger.y * scaleFactor
+                    )
+                    if (spawnedZagger) {
+                        this.scene.physics.add.existing(spawnedZagger)
+                        this.zapperContainer.add(spawnedZagger)
+                    }
+                }
+            })
         }
 
-        if (this.backgroundLayerTwo) {
-            this.add(this.backgroundLayerTwo)
+        if (this.havingLaserTile) {
+            const laserTriggerObjects = this.map.createFromObjects('Trigger Laser', {
+                name: 'laser',
+                classType: Phaser.Physics.Arcade.Sprite,
+            })
 
-            this.backgroundLayerTwo.displayHeight = Number(this.scene.game.config.height)
-            this.backgroundLayerTwo.displayWidth = this.backgroundLayerTwo.width
+            laserTriggerObjects.forEach((laserTriggerObject) => {
+                const laserTrigger = laserTriggerObject as Phaser.Physics.Arcade.Sprite
 
-            this.backgroundLayerTwo.x = this.x
-            this.backgroundLayerTwo.y = this.y
+                this.scene.physics.add.existing(laserTrigger)
+                laserTrigger.setActive(false)
+                laserTrigger.setVisible(false)
+                this.laserContainer.add(laserTrigger)
+            })
+        }
+
+        if (this.havingAlarmTile) {
+            const alarmObjects = this.map.createFromObjects('Alarm Light Layer', {
+                name: 'alarm',
+                key: 'alarmLightGlow_TVOS',
+                classType: Phaser.Physics.Arcade.Sprite,
+            })
+
+            alarmObjects.forEach((alarmObject) => {
+                const alarm = alarmObject as Phaser.Physics.Arcade.Sprite
+                alarm.setPosition(alarm.x, alarm.y * scaleFactor)
+                alarm.setScale(scaleFactor)
+                alarm.play('alarmLightGlow_TVOS')
+                this.scene.physics.add.existing(alarm)
+                this.alarmContainer.add(alarm)
+            })
         }
 
         this.setDepth(-1)
@@ -92,33 +154,52 @@ class MapTile extends Phaser.GameObjects.Container {
 
     public init() {}
 
-    public preUpdate(time: number, deltaTime: number): void {
+    public getBackgroundLayer(): Phaser.Tilemaps.TilemapLayer | undefined {
         if (this.backgroundLayer) {
-            this.backgroundLayer.x = this.x
+            return this.backgroundLayer
         }
-        if (this.backgroundLayerTwo) {
-            this.backgroundLayerTwo.x = this.x
-        }
-        if (this.backgroundLayerThree) {
-            this.backgroundLayerThree.x = this.x
-        }
-        if (this.backgroundLayerFour) {
-            this.backgroundLayerFour.x = this.x
-        }
+    }
 
-        this.alarmContainer.x = this.x
-        this.coinContainer.x = this.x
-        this.zapperContainer.x = this.x
-        this.missileContainer.x = this.x
-        this.laserContainer.x = this.x
-
-        if (this.moving) {
-            this.x -= ((Number(this.scene.game.config.width) / 3) * deltaTime) / 1000
-
-            if (this.backgroundLayer && this.x <= -this.backgroundLayer.width) {
-                this.resetObjects()
+    private setupBackgroundLayers(): void {
+        const layers = [
+            this.backgroundLayerFour,
+            this.backgroundLayerThree,
+            this.backgroundLayer,
+            this.backgroundLayerTwo,
+        ]
+        layers.forEach((layer) => {
+            if (layer) {
+                this.add(layer)
+                layer.displayHeight = Number(this.scene.game.config.height)
+                layer.displayWidth = layer.width
+                layer.x = this.x
+                layer.y = this.y
             }
-        }
+        })
+    }
+
+    private updateBackgroundLayers(): void {
+        const layers = [
+            this.backgroundLayerFour,
+            this.backgroundLayerThree,
+            this.backgroundLayer,
+            this.backgroundLayerTwo,
+        ]
+        layers.forEach((layer) => {
+            if (layer) {
+                layer.x = this.x
+            }
+        })
+    }
+
+    private setupContainers(): void {
+        [
+            this.alarmContainer,
+            this.coinContainer,
+            this.zapperContainer,
+            this.missileContainer,
+            this.laserContainer,
+        ].forEach((container) => (container.x = this.x))
     }
 
     private resetObjects(): void {
@@ -134,6 +215,19 @@ class MapTile extends Phaser.GameObjects.Container {
         this.laserContainer.list.forEach((laserObject) => {
             laserObject.setActive(false)
         })
+    }
+
+    public preUpdate(time: number, deltaTime: number): void {
+        this.updateBackgroundLayers()
+        this.setupContainers()
+
+        if (this.moving) {
+            this.x -= ((Number(this.scene.game.config.width) / 3) * deltaTime) / 1000
+
+            if (this.backgroundLayer && this.x <= -this.backgroundLayer.width) {
+                this.resetObjects()
+            }
+        }
     }
 
     public collisionWithCoin(player: Player): void {

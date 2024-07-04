@@ -44,6 +44,7 @@ class DieState extends PlayerState {
     }
 
     update(player: Player): void {
+        player.getbulletEffect().setVisible(false)
         if (player.y - this.heightOrigin / 2 >= Number(player.scene.game.config.height) / 1.45) {
             player.body.setGravityY(0)
             player.body.setVelocity(0)

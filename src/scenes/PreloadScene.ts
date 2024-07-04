@@ -235,6 +235,8 @@ class PreloadScene extends Scene {
         this.createAnimation('bulletSplash', 'bulletSplash', 0, 3, 10, -1)
         this.createAnimation('fireBody', 'defaultBody', 20, 23, 10)
         this.createAnimation('fireHead', 'defaultHead', 20, 23, 10)
+        this.createAnimation('electricBody', 'defaultBody', 16, 19, 10)
+        this.createAnimation('electricHead', 'defaultHead', 16, 19, 10)
 
         this.createAnimation('missile', 'missile', 0, 3, 5)
         this.createAnimation('missileAlert', 'missileAlert', 0, 7, 5)
