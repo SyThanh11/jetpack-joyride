@@ -7,19 +7,19 @@ class PauseState implements State {
 
     constructor(private scene: Game) {}
 
-    enter(): void {
+    public enter(): void {
         console.log('Begin Pause State')
         this.scene.player.isStartMusic = false
         this.scene.scene.launch('PauseScene', { sceneGame: this.scene })
         this.scene.scene.pause()
     }
 
-    exit(): void {
+    public exit(): void {
         console.log('End Pause State')
         this.scene.scene.stop('PauseScene')
     }
 
-    update(time: number, delta: number): void {}
+    public update(time: number, delta: number): void {}
 }
 
 export default PauseState

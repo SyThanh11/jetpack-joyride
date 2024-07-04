@@ -5,7 +5,7 @@ import StartState from './StartState'
 class RestartState implements State {
     constructor(private scene: Game) {}
 
-    enter(): void {
+    public enter(): void {
         console.log('Begin Restart State')
 
         this.scene.scene.stop('Game')
@@ -13,11 +13,11 @@ class RestartState implements State {
         this.scene.stateMachine.changeState(new StartState(this.scene))
     }
 
-    exit(): void {
+    public exit(): void {
         console.log('End Restart State')
     }
 
-    update(time: number, delta: number): void {}
+    public update(time: number, delta: number): void {}
 }
 
 export default RestartState

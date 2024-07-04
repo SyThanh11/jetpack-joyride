@@ -5,7 +5,7 @@ import PlayState from './PlayState'
 class StartState implements State {
     constructor(private scene: Game) {}
 
-    enter(): void {
+    public enter(): void {
         console.log('Begin Start State')
 
         const gameWidth = Number(this.scene.game.config.width)
@@ -47,7 +47,7 @@ class StartState implements State {
         })
     }
 
-    exit(): void {
+    public exit(): void {
         console.log('End Start State')
         this.scene.gameStarted = true
         this.scene.title.destroy()

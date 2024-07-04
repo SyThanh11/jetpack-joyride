@@ -3,14 +3,14 @@ import Player from '../../player/state/Player'
 
 class Laser extends Phaser.GameObjects.Container {
     declare body: Phaser.Physics.Arcade.Body
-    private laserLeft: Phaser.Physics.Arcade.Sprite
-    private laserRight: Phaser.Physics.Arcade.Sprite
-    private laserEnergyLeft: Phaser.Physics.Arcade.Sprite
-    private laserEnergyRight: Phaser.Physics.Arcade.Sprite
-    private laserGLowLeft: Phaser.Physics.Arcade.Sprite
-    private laserGLowRight: Phaser.Physics.Arcade.Sprite
+    private laserLeft: Phaser.GameObjects.Sprite
+    private laserRight: Phaser.GameObjects.Sprite
+    private laserEnergyLeft: Phaser.GameObjects.Sprite
+    private laserEnergyRight: Phaser.GameObjects.Sprite
+    private laserGLowLeft: Phaser.GameObjects.Sprite
+    private laserGLowRight: Phaser.GameObjects.Sprite
+    private laserWarning: Phaser.GameObjects.Sprite
     private laserPower: Phaser.Physics.Arcade.Sprite
-    private laserWarning: Phaser.Physics.Arcade.Sprite
 
     private animationsStarted: boolean
 

@@ -7,9 +7,9 @@ class Zapper extends Phaser.GameObjects.Container {
 
     private zapperOne: Phaser.Physics.Arcade.Sprite
     private zapperTwo: Phaser.Physics.Arcade.Sprite
-    private zapEffect: Phaser.Physics.Arcade.Sprite
-    private glowOne: Phaser.Physics.Arcade.Sprite
-    private glowTwo: Phaser.Physics.Arcade.Sprite
+    private zapEffect: Phaser.GameObjects.Sprite
+    private glowOne: Phaser.GameObjects.Sprite
+    private glowTwo: Phaser.GameObjects.Sprite
 
     private rotationSpeed: number
     private zapperDistance: number

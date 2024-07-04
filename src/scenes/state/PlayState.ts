@@ -4,7 +4,7 @@ import State from './GamePlayState'
 class PlayState implements State {
     constructor(private scene: Game) {}
 
-    enter(): void {
+    public enter(): void {
         console.log('Begin Play State')
 
         this.scene.music = this.scene.sound.add('musicLevel')
@@ -14,11 +14,11 @@ class PlayState implements State {
         this.scene.mapManager.start()
     }
 
-    exit(): void {
+    public exit(): void {
         console.log('End Play State')
     }
 
-    update(time: number, deltaTime: number): void {
+    public update(time: number, deltaTime: number): void {
         this.scene.mapManager.update()
         if (this.scene.gameStarted) {
             this.scene.timeInterval -= deltaTime / 1000

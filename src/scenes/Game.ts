@@ -36,7 +36,7 @@ export class Game extends Scene {
         super('Game')
     }
 
-    create() {
+    public create() {
         const gameWidth = Number(this.game.config.width)
         const gameHeight = Number(this.game.config.height)
 

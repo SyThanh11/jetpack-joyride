@@ -2,9 +2,8 @@ import MissileState from './MissileState'
 
 class Missile extends Phaser.GameObjects.Container {
     declare body: Phaser.Physics.Arcade.Body
-    private missile: Phaser.Physics.Arcade.Sprite
-    private missileEffect: Phaser.Physics.Arcade.Sprite
-
+    private missile: Phaser.GameObjects.Sprite
+    private missileEffect: Phaser.GameObjects.Sprite
     private currentState: MissileState
     private missileAlert: Phaser.Physics.Arcade.Sprite | null
 

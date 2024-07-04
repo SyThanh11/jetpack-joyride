@@ -5,11 +5,11 @@ class BootGameScene extends Scene {
         super('BootGameScene')
     }
 
-    preload(): void {
+    public preload(): void {
         this.load.image('screen', 'assets/Splash/loading_screen.png')
     }
 
-    create(): void {
+    public create(): void {
         const gameWidth = Number(this.game.config.width)
         const gameHeight = Number(this.game.config.height)
 

@@ -5,7 +5,7 @@ import State from './GamePlayState'
 class GameOverState implements State {
     constructor(private scene: Game) {}
 
-    enter(): void {
+    public enter(): void {
         console.log('Begin Game Over State')
         const gameOverUI = new GameOverUI(this.scene)
         gameOverUI.setTextScore(this.scene.score.getScore())
@@ -15,11 +15,11 @@ class GameOverState implements State {
         this.scene.mapManager.stop()
     }
 
-    exit(): void {
+    public exit(): void {
         console.log('End Game Over State')
     }
 
-    update(time: number, delta: number): void {}
+    public update(time: number, delta: number): void {}
 }
 
 export default GameOverState

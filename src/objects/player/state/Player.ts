@@ -5,12 +5,12 @@ import RunState from './RunState'
 
 class Player extends Phaser.GameObjects.Container {
     declare body: Phaser.Physics.Arcade.Body
-    private defaultHead: Phaser.Physics.Arcade.Sprite
-    private defaultBody: Phaser.Physics.Arcade.Sprite
-    private defaultJetpack: Phaser.Physics.Arcade.Sprite
+    private defaultHead: Phaser.GameObjects.Sprite
+    private defaultBody: Phaser.GameObjects.Sprite
+    private defaultJetpack: Phaser.GameObjects.Sprite
     private bulletPool: Phaser.GameObjects.Group
     private cartouchePool: Phaser.GameObjects.Group
-    private bulletEffect: Phaser.Physics.Arcade.Sprite
+    private bulletEffect: Phaser.GameObjects.Sprite
 
     private moving = false
     private currentState: PlayerState
@@ -100,11 +100,11 @@ class Player extends Phaser.GameObjects.Container {
         this.currentState.enter(this)
     }
 
-    public getDefaultBody(): Phaser.Physics.Arcade.Sprite {
+    public getDefaultBody(): Phaser.GameObjects.Sprite {
         return this.defaultBody
     }
 
-    public getbulletEffect(): Phaser.Physics.Arcade.Sprite {
+    public getbulletEffect(): Phaser.GameObjects.Sprite {
         return this.bulletEffect
     }
 
@@ -172,7 +172,7 @@ class Player extends Phaser.GameObjects.Container {
         }
     }
 
-    public getJetpack(): Phaser.Physics.Arcade.Sprite {
+    public getJetpack(): Phaser.GameObjects.Sprite {
         return this.defaultJetpack
     }
 

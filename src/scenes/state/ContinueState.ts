@@ -5,18 +5,18 @@ import PlayState from './PlayState'
 class ContinueState implements State {
     constructor(private scene: Game) {}
 
-    enter(): void {
+    public enter(): void {
         console.log('Begin Continue State')
         this.scene.scene.resume('Game')
         this.scene.player.isStartMusic = true
         this.scene.stateMachine.changeState(new PlayState(this.scene))
     }
 
-    exit(): void {
+    public exit(): void {
         console.log('End Continue State')
     }
 
-    update(time: number, delta: number): void {}
+    public update(time: number, delta: number): void {}
 }
 
 export default ContinueState

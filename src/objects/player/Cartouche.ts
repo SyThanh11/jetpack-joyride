@@ -1,4 +1,4 @@
-class Cartouche extends Phaser.Physics.Arcade.Sprite {
+class Cartouche extends Phaser.GameObjects.Sprite {
     private speed = 0
 
     constructor(scene: Phaser.Scene) {
