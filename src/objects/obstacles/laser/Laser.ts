@@ -242,7 +242,7 @@ class Laser extends Phaser.GameObjects.Container {
         this.animationsStarted = false
     }
 
-    preUpdate() {
+    public preUpdate() {
         if (this.isWithinCameraView() && !this.animationsStarted) {
             Events.emit('laserVisible', this)
         }

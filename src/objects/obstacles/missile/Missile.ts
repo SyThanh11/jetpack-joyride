@@ -5,8 +5,8 @@ class Missile extends Phaser.GameObjects.Container {
     private missile: Phaser.Physics.Arcade.Sprite
     private missileEffect: Phaser.Physics.Arcade.Sprite
 
-    public currentState: MissileState
-    public missileAlert: Phaser.Physics.Arcade.Sprite | null
+    private currentState: MissileState
+    private missileAlert: Phaser.Physics.Arcade.Sprite | null
 
     private missileLaunchMusic: Phaser.Sound.BaseSound | null = null
     private rocketExplodeMusic: Phaser.Sound.BaseSound | null = null
@@ -25,7 +25,17 @@ class Missile extends Phaser.GameObjects.Container {
         this.setupAnimationEvents()
     }
 
-    init() {
+    private setupAnimationEvents() {
+        this.missile.on('animationstart', () => {
+            this.missileLaunchMusic?.play()
+        })
+
+        this.missile.on('animationcomplete', () => {
+            this.missileLaunchMusic?.stop()
+        })
+    }
+
+    public init() {
         this.missile = new Phaser.Physics.Arcade.Sprite(this.scene, 0, -2, 'missile').setOrigin(
             0,
             0
@@ -50,14 +60,12 @@ class Missile extends Phaser.GameObjects.Container {
         this.scene.add.existing(this)
     }
 
-    private setupAnimationEvents() {
-        this.missile.on('animationstart', () => {
-            this.missileLaunchMusic?.play()
-        })
+    public getMissileAlert(): Phaser.Physics.Arcade.Sprite | null {
+        return this.missileAlert
+    }
 
-        this.missile.on('animationcomplete', () => {
-            this.missileLaunchMusic?.stop()
-        })
+    public setMissileAlert(missileAlert: Phaser.Physics.Arcade.Sprite | null) {
+        this.missileAlert = missileAlert
     }
 
     public playAnimation(key: string, keyEffect: string): void {
@@ -65,7 +73,7 @@ class Missile extends Phaser.GameObjects.Container {
         this.missileEffect.play(keyEffect)
     }
 
-    preUpdate(time: number, deltaTime: number) {
+    public preUpdate(time: number, deltaTime: number) {
         if (this.state === MissileState.ACTIVE) {
             this.x -= (1500 * deltaTime) / 1000
             if (this.x + this.missile.width < 0) {
@@ -75,7 +83,7 @@ class Missile extends Phaser.GameObjects.Container {
         }
     }
 
-    triggerMissileEffect = () => {
+    public triggerMissileEffect = () => {
         const explosion = this.scene.add.sprite(this.x, this.y, 'missileExplosion')
         explosion.once('animationstart', () => {
             this.rocketExplodeMusic?.play()
@@ -89,7 +97,7 @@ class Missile extends Phaser.GameObjects.Container {
         this.setActive(false)
     }
 
-    moveWithPlayer(playerY: number) {
+    public moveWithPlayer(playerY: number) {
         if (this.missileAlert) {
             this.missileAlert.y = playerY
             this.y = this.missileAlert.y

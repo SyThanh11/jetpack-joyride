@@ -1,16 +1,15 @@
 import Player from '../../player/state/Player'
-import GameObjectCollider from '../GameObjectCollider'
+import GameObjectCollider from './GameObjectCollider'
 
 class Zapper extends Phaser.GameObjects.Container {
     declare body: Phaser.Physics.Arcade.Body
+    private listColliders: GameObjectCollider[]
 
     private zapperOne: Phaser.Physics.Arcade.Sprite
     private zapperTwo: Phaser.Physics.Arcade.Sprite
     private zapEffect: Phaser.Physics.Arcade.Sprite
     private glowOne: Phaser.Physics.Arcade.Sprite
     private glowTwo: Phaser.Physics.Arcade.Sprite
-
-    private listColliders: GameObjectCollider[]
 
     private rotationSpeed: number
     private zapperDistance: number
@@ -34,7 +33,7 @@ class Zapper extends Phaser.GameObjects.Container {
         this.init()
     }
 
-    init() {
+    public init() {
         this.listColliders = []
         this.zapperOne = new Phaser.Physics.Arcade.Sprite(
             this.scene,
@@ -90,7 +89,7 @@ class Zapper extends Phaser.GameObjects.Container {
         this.playAnimation()
     }
 
-    positionZapEffect() {
+    private positionZapEffect() {
         const centerX = (this.zapperOne.x + this.zapperTwo.x) / 2
         const centerY = (this.zapperOne.y + this.zapperTwo.y) / 2
         const distance = Phaser.Math.Distance.Between(
@@ -107,7 +106,7 @@ class Zapper extends Phaser.GameObjects.Container {
         this.zapEffect.displayHeight = this.zapEffect.displayHeight / 2
     }
 
-    colliderOfZapEffect() {
+    private colliderOfZapEffect() {
         const distance = Phaser.Math.Distance.Between(
             this.zapperOne.x,
             this.zapperOne.y,
@@ -137,17 +136,7 @@ class Zapper extends Phaser.GameObjects.Container {
         })
     }
 
-    preUpdate(time: number, deltaTime: number): void {
-        if (this.isRotate) {
-            this.rotation += (this.rotationSpeed * deltaTime) / 1000
-        }
-        if (this.x + 100 < 0) {
-            this.setActive(false)
-            this.setVisible(false)
-        }
-    }
-
-    playAnimation() {
+    private playAnimation() {
         this.zapperOne.play('zapper')
         this.zapperTwo.play('zapper')
         if (!this.isRotate) {
@@ -159,7 +148,17 @@ class Zapper extends Phaser.GameObjects.Container {
         }
     }
 
-    collisionWithPlayer(player: Player): void {
+    public preUpdate(time: number, deltaTime: number): void {
+        if (this.isRotate) {
+            this.rotation += (this.rotationSpeed * deltaTime) / 1000
+        }
+        if (this.x + 100 < 0) {
+            this.setActive(false)
+            this.setVisible(false)
+        }
+    }
+
+    public collisionWithPlayer(player: Player): void {
         this.scene.physics.add.collider(player, this.listColliders)
         this.scene.physics.add.collider(player, this.zapperOne)
         this.scene.physics.add.collider(player, this.zapperTwo)

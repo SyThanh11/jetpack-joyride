@@ -57,15 +57,15 @@ class MissileManager {
 
         missileAlert.on('animationcomplete', () => {
             this.missileWarningMusic?.stop()
-            missile.missileAlert?.destroy()
-            missile.missileAlert = null
+            missile.getMissileAlert()?.destroy()
+            missile.setMissileAlert(null)
             scene.physics.add.existing(missile)
             missile.state = MissileState.ACTIVE
             missile.playAnimation('missile', 'missileEffect')
         })
 
         missileAlert.play('missileAlert').setScale(missileAlertScale)
-        missile.missileAlert = missileAlert
+        missile.setMissileAlert(missileAlert)
 
         return missile
     }

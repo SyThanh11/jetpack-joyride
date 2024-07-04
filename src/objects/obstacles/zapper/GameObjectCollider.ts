@@ -7,7 +7,7 @@ class GameObjectCollider extends Phaser.Physics.Arcade.Image {
         this.init()
     }
 
-    init() {
+    public init() {
         this.setVisible(false)
         this.scene.physics.world.enable(this)
         this.scene.add.existing(this)
@@ -16,7 +16,7 @@ class GameObjectCollider extends Phaser.Physics.Arcade.Image {
         this.setOrigin(0.5, 0.5)
     }
 
-    setSizeCollider(width: number, height: number) {
+    public setSizeCollider(width: number, height: number) {
         this.body.setSize(width, height)
         this.refreshBody()
     }
