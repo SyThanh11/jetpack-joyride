@@ -8,6 +8,7 @@ class ContinueState implements State {
     enter(): void {
         console.log('Begin Continue State')
         this.scene.scene.resume('Game')
+        this.scene.player.isStartMusic = true
         this.scene.stateMachine.changeState(new PlayState(this.scene))
     }
 

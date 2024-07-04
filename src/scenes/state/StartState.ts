@@ -60,6 +60,11 @@ class StartState implements State {
         this.scene.mapManager.triggerLasers(this.scene.player)
         this.scene.mapManager.laserCollisionWithPlayer(this.scene.player)
 
+        if (!this.scene.music) {
+            this.scene.music = this.scene.sound.add('menuAmb')
+            this.scene.music.play({ loop: true })
+        }
+
         this.scene.input.on('pointerdown', () => {
             if (!this.scene.gameStarted) {
                 this.scene.score.setScore(0)
@@ -69,6 +74,8 @@ class StartState implements State {
         })
 
         Events.on('addCoin', () => {
+            const music = this.scene.sound.add('coinPickUpThree')
+            music.play()
             this.scene.score.addCoin()
             this.scene.gameUI.setTextCoin(this.scene.score.getCoin())
         })

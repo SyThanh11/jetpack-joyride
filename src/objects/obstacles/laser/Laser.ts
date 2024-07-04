@@ -16,6 +16,11 @@ class Laser extends Phaser.GameObjects.Container {
 
     private gameWidth: number
 
+    private laserFireLPMusic: Phaser.Sound.BaseSound | null = null
+    private laserStartMusic: Phaser.Sound.BaseSound | null = null
+    private laserStopMusic: Phaser.Sound.BaseSound | null = null
+    private laserWarningMusic: Phaser.Sound.BaseSound | null = null
+
     constructor(
         scene: Phaser.Scene,
         x?: number,
@@ -28,6 +33,11 @@ class Laser extends Phaser.GameObjects.Container {
     }
 
     public init() {
+        this.laserFireLPMusic = this.scene.sound.add('laserFireLPMusic')
+        this.laserStartMusic = this.scene.sound.add('laserStartMusic')
+        this.laserStopMusic = this.scene.sound.add('laserStopMusic')
+        this.laserWarningMusic = this.scene.sound.add('laserWarningMusic')
+
         this.gameWidth = Number(this.scene.game.config.width)
         this.laserLeft = this.createSprite(0, 0, 'laser')
         this.laserRight = this.createSprite(0, 0, 'laser')
@@ -54,6 +64,7 @@ class Laser extends Phaser.GameObjects.Container {
 
         this.setupSprites()
         this.positionLaserWarning()
+        this.setupAnimationEvents()
     }
 
     private createSprite(
@@ -109,6 +120,18 @@ class Laser extends Phaser.GameObjects.Container {
         this.laserWarning.setPosition(centerX, centerY)
         this.laserWarning.displayWidth = distance
         this.laserWarning.displayHeight = this.laserWarning.displayHeight / 2
+    }
+
+    private setupAnimationEvents() {
+        this.laserEnergyLeft.on('animationstart', () => this.laserStartMusic?.play())
+        this.laserEnergyRight.on('animationstart', () => this.laserStartMusic?.play())
+        this.laserPower.on('animationstart', () => this.laserFireLPMusic?.play())
+        this.laserWarning.on('animationstart', () => this.laserWarningMusic?.play())
+
+        this.laserEnergyLeft.on('animationcomplete', () => this.laserStopMusic?.play())
+        this.laserEnergyRight.on('animationcomplete', () => this.laserStopMusic?.play())
+        this.laserPower.on('animationcomplete', () => this.laserFireLPMusic?.stop())
+        this.laserWarning.on('animationcomplete', () => this.laserWarningMusic?.stop())
     }
 
     public startAnimations() {

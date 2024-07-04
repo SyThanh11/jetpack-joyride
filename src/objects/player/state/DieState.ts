@@ -5,6 +5,7 @@ import PlayerState from './PlayerState'
 
 class DieState extends PlayerState {
     enter(player: Player): void {
+        player.playerHurt?.play()
         player.playAnimation('dieBody', 'dieHead')
         player.remove(player.getJetpack(), true)
 

@@ -5,6 +5,7 @@ import PlayerState from './PlayerState'
 
 class FlyState extends PlayerState {
     enter(player: Player): void {
+        player.runMetalMusic?.stop()
         player.playAnimation('flyBody', 'flyHead', 'flyJetpack')
         player.body.setVelocityY(-Number(player.scene.game.config.width) / 4)
         player.body.setGravityY(0)

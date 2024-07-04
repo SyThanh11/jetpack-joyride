@@ -150,6 +150,33 @@ class PreloadScene extends Scene {
 
         this.load.image('mainMenu', 'assets/Levels/Title/Objects/title_small.png')
 
+        // Audio
+        this.load.audio('menuAmb', ['assets/BGM/menu_amb_lp.mp3'])
+        this.load.audio('musicLevel', ['assets/BGM/Music_Level.mp3'])
+
+        this.load.audio('runMetalMusic', ['assets/SFX/Barry/run_metal_left_1.mp3'])
+        this.load.audio('playerHurt', ['assets/SFX/Barry/Player_hurt_2.mp3'])
+        this.load.audio('playerBones', ['assets/SFX/Barry/Player_bones.mp3'])
+        this.load.audio('fallBounce', ['assets/SFX/Barry/fall_bounce_1.mp3'])
+
+        this.load.audio('jetpackFireLP', ['assets/SFX/Jetpack/jetpack_fireLP.mp3'])
+        this.load.audio('jetpackStop', ['assets/SFX/Jetpack/Jetpack_stop.mp3'])
+
+        this.load.audio('coinPickUpOne', ['assets/SFX/Obstacle/Coin/coin_pickup_1.mp3'])
+        this.load.audio('coinPickUpTwo', ['assets/SFX/Obstacle/Coin/coin_pickup_2.mp3'])
+        this.load.audio('coinPickUpThree', ['assets/SFX/Obstacle/Coin/coin_pickup_3.mp3'])
+
+        this.load.audio('laserFireLPMusic', ['assets/SFX/Obstacle/Laser/laser_fire_lp.mp3'])
+        this.load.audio('laserStartMusic', ['assets/SFX/Obstacle/Laser/laser_start.mp3'])
+        this.load.audio('laserStopMusic', ['assets/SFX/Obstacle/Laser/laser_stop.mp3'])
+        this.load.audio('laserWarningMusic', ['assets/SFX/Obstacle/Laser/laser_warning.mp3'])
+
+        this.load.audio('missileLaunchMusic', ['assets/SFX/Obstacle/Missile/missile_launch.mp3'])
+        this.load.audio('missileWarningMusic', ['assets/SFX/Obstacle/Missile/missile_warning.mp3'])
+        this.load.audio('rocketExplodeMusic', ['assets/SFX/Obstacle/Missile/rocket_explode_1.mp3'])
+
+        this.load.audio('selectButtonMusic', ['assets/SFX/UI/ui_select.mp3'])
+
         const gameWidth = Number(this.game.config.width)
         const gameHeight = Number(this.game.config.height)
 

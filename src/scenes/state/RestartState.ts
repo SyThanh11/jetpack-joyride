@@ -7,6 +7,7 @@ class RestartState implements State {
 
     enter(): void {
         console.log('Begin Restart State')
+
         this.scene.scene.stop('Game')
         this.scene.scene.start('Game')
         this.scene.stateMachine.changeState(new StartState(this.scene))

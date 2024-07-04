@@ -16,6 +16,14 @@ class Player extends Phaser.GameObjects.Container {
     private currentState: PlayerState
     private isFired = false
 
+    public runMetalMusic: Phaser.Sound.BaseSound | null = null
+    public playerHurt: Phaser.Sound.BaseSound | null = null
+    public fallBounce: Phaser.Sound.BaseSound | null = null
+    private playerBones: Phaser.Sound.BaseSound | null = null
+    private jetpackFire: Phaser.Sound.BaseSound | null = null
+    private jetpackStop: Phaser.Sound.BaseSound | null = null
+    public isStartMusic = true
+
     constructor(
         scene: Phaser.Scene,
         x?: number,
@@ -28,6 +36,13 @@ class Player extends Phaser.GameObjects.Container {
     }
 
     init() {
+        this.runMetalMusic = this.scene.sound.add('runMetalMusic')
+        this.playerHurt = this.scene.sound.add('playerHurt')
+        this.playerBones = this.scene.sound.add('playerBones')
+        this.fallBounce = this.scene.sound.add('fallBounce')
+        this.jetpackFire = this.scene.sound.add('jetpackFireLP')
+        this.jetpackStop = this.scene.sound.add('jetpackStop')
+
         this.defaultHead = new Phaser.Physics.Arcade.Sprite(
             this.scene,
             2,
@@ -91,19 +106,30 @@ class Player extends Phaser.GameObjects.Container {
 
     public handlePointerDown(): void {
         this.currentState.handlePointerDown(this)
+
         this.isFired = true
+        if (this.isStartMusic) {
+            this.jetpackFire?.play({ loop: true })
+            this.jetpackStop?.stop()
+        }
         this.bulletEffect.play('bulletFlash')
         this.bulletEffect.setVisible(true)
     }
 
     public handlePointerUp(): void {
         this.currentState.handlePointerUp(this)
+
         this.isFired = false
+        if (this.isStartMusic) {
+            this.jetpackStop?.play()
+            this.jetpackFire?.stop()
+        }
         this.bulletEffect.anims.stop()
         this.bulletEffect.setVisible(false)
     }
 
     public handleCollision = (): void => {
+        this.playerBones?.play()
         this.currentState.handleCollision(this)
     }
 

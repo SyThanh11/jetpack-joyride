@@ -9,6 +9,7 @@ class PauseState implements State {
 
     enter(): void {
         console.log('Begin Pause State')
+        this.scene.player.isStartMusic = false
         this.scene.scene.launch('PauseScene', { sceneGame: this.scene })
         this.scene.scene.pause()
     }

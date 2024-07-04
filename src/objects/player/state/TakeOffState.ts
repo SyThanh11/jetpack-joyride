@@ -6,6 +6,7 @@ import Player from './Player'
 
 class TakeOffState extends PlayerState {
     enter(player: Player): void {
+        player.fallBounce?.play()
         player.playAnimation('takeOffBody', 'takeOffHead', 'takeOffJetpack')
         player.body.setGravityY(0)
         player.body.setVelocityY(0)

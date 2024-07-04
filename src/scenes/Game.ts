@@ -12,6 +12,7 @@ import StartState from './state/StartState'
 export const Events = new Phaser.Events.EventEmitter()
 
 export class Game extends Scene {
+    public music: Phaser.Sound.BaseSound | null = null
     public player: Player
     public score: Score = new Score()
     public mapManager: MapManager

@@ -25,7 +25,10 @@ class LaserManager {
         ])
     }
 
-    public spawnLaser(x = 0, y = 500): Laser | null {
+    public spawnLaser(scene: Phaser.Scene, x = 0, yRatio = 0.5): Laser | null {
+        const screenHeight = Number(scene.game.config.height)
+        const y = screenHeight * yRatio
+
         const laser: Laser = this.laserPool.get(x, y) as Laser
         if (!laser) {
             alert('Out of stock')
@@ -37,8 +40,13 @@ class LaserManager {
     }
 
     public spawnLasers(scene: Phaser.Scene) {
-        for (let i = 0; i < 4; i++) {
-            this.spawnLaser(0, Number(scene.game.config.height) / 2 + i * 100)
+        const numLasers = 4
+        const startYRatio = 0.25
+        const spacingRatio = 0.1
+
+        for (let i = 0; i < numLasers; i++) {
+            const yRatio = startYRatio + i * spacingRatio
+            this.spawnLaser(scene, 0, yRatio)
         }
     }
 

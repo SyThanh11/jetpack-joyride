@@ -5,8 +5,11 @@ import MissileState from './MissileState'
 class MissileManager {
     private missilePool: Phaser.GameObjects.Group
     private numberMissiles = 1
+    private missileWarningMusic: Phaser.Sound.BaseSound | null = null
 
     constructor(scene: Phaser.Scene) {
+        this.missileWarningMusic = scene.sound.add('missileWarningMusic')
+
         this.missilePool = new Phaser.GameObjects.Group(scene, {
             classType: Missile,
             maxSize: 10,
@@ -28,25 +31,42 @@ class MissileManager {
         const missile: Missile = this.missilePool.get(x, y)
 
         missile.alpha = 1
-        missile.scale = 3
+        missile.scale = (Number(scene.game.config.width) / 1000) * 1.3
         missile.setVisible(true)
         missile.setActive(true)
         missile.state = MissileState.ALERT
 
+        const screenWidth = Number(scene.game.config.width)
+        const screenHeight = Number(scene.game.config.height)
+
+        const missileX = screenWidth + 100
+        const missileY = Phaser.Math.Clamp(
+            y,
+            0,
+            screenHeight - 200 - missile.displayHeight * missile.scaleY
+        )
+
+        const missileAlertScale = Number(scene.game.config.width) / 1000
         const missileAlert = scene.physics.add
-            .sprite(x - 64, y, 'missileAlert')
+            .sprite(missileX - 32 * 3.5 * missileAlertScale, missileY, 'missileAlert')
             .setOrigin(0, 0)
-            .setScale(2)
-        missileAlert.play('missileAlert')
-        missile.missileAlert = missileAlert
+
+        missileAlert.on('animationstart', () => {
+            this.missileWarningMusic?.play()
+        })
 
         missileAlert.on('animationcomplete', () => {
+            this.missileWarningMusic?.stop()
             missile.missileAlert?.destroy()
             missile.missileAlert = null
             scene.physics.add.existing(missile)
             missile.state = MissileState.ACTIVE
             missile.playAnimation('missile', 'missileEffect')
         })
+
+        missileAlert.play('missileAlert').setScale(missileAlertScale)
+        missile.missileAlert = missileAlert
+
         return missile
     }
 

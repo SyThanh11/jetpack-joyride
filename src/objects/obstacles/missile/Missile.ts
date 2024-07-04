@@ -8,6 +8,9 @@ class Missile extends Phaser.GameObjects.Container {
     public currentState: MissileState
     public missileAlert: Phaser.Physics.Arcade.Sprite | null
 
+    private missileLaunchMusic: Phaser.Sound.BaseSound | null = null
+    private rocketExplodeMusic: Phaser.Sound.BaseSound | null = null
+
     constructor(
         scene: Phaser.Scene,
         x?: number,
@@ -15,8 +18,11 @@ class Missile extends Phaser.GameObjects.Container {
         children?: Phaser.GameObjects.GameObject[]
     ) {
         super(scene, x, y, children)
+        this.missileLaunchMusic = scene.sound.add('missileLaunchMusic')
+        this.rocketExplodeMusic = scene.sound.add('rocketExplodeMusic')
 
         this.init()
+        this.setupAnimationEvents()
     }
 
     init() {
@@ -44,6 +50,16 @@ class Missile extends Phaser.GameObjects.Container {
         this.scene.add.existing(this)
     }
 
+    private setupAnimationEvents() {
+        this.missile.on('animationstart', () => {
+            this.missileLaunchMusic?.play()
+        })
+
+        this.missile.on('animationcomplete', () => {
+            this.missileLaunchMusic?.stop()
+        })
+    }
+
     public playAnimation(key: string, keyEffect: string): void {
         this.missile.play(key)
         this.missileEffect.play(keyEffect)
@@ -61,11 +77,14 @@ class Missile extends Phaser.GameObjects.Container {
 
     triggerMissileEffect = () => {
         const explosion = this.scene.add.sprite(this.x, this.y, 'missileExplosion')
-        explosion.play('missileExplosion')
+        explosion.once('animationstart', () => {
+            this.rocketExplodeMusic?.play()
+        })
         explosion.once('animationcomplete', () => {
+            this.rocketExplodeMusic?.stop()
             explosion.destroy()
         })
-
+        explosion.play('missileExplosion')
         this.setVisible(false)
         this.setActive(false)
     }

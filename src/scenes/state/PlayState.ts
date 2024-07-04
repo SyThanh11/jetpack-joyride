@@ -7,6 +7,9 @@ class PlayState implements State {
     enter(): void {
         console.log('Begin Play State')
 
+        this.scene.music = this.scene.sound.add('musicLevel')
+        this.scene.music.play({ loop: true })
+
         this.scene.player.start()
         this.scene.mapManager.start()
     }

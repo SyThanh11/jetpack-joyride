@@ -5,6 +5,7 @@ import PlayerState from './PlayerState'
 
 class RunState extends PlayerState {
     enter(player: Player): void {
+        player.runMetalMusic?.play({ loop: true })
         player.playAnimation('runBody', 'runHead', 'runJetpack')
     }
 
