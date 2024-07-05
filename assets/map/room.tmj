@@ -15,8 +15,8 @@
                  "type":"",
                  "visible":true,
                  "width":229,
-                 "x":2270.875,
-                 "y":305
+                 "x":1758.875,
+                 "y":695
                 }, 
                 {
                  "height":276,
@@ -26,8 +26,8 @@
                  "type":"",
                  "visible":true,
                  "width":35,
-                 "x":3569.375,
-                 "y":548
+                 "x":4495.375,
+                 "y":530
                 }, 
                 {
                  "height":276,
@@ -37,8 +37,8 @@
                  "type":"",
                  "visible":true,
                  "width":35,
-                 "x":2866.375,
-                 "y":212
+                 "x":3352.375,
+                 "y":168
                 }, 
                 {
                  "height":218,
@@ -48,30 +48,8 @@
                  "type":"",
                  "visible":true,
                  "width":35,
-                 "x":4086.375,
-                 "y":274
-                }, 
-                {
-                 "height":276,
-                 "id":73,
-                 "name":"zagger",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":35,
-                 "x":4663.125,
-                 "y":266
-                }, 
-                {
-                 "height":276,
-                 "id":74,
-                 "name":"zagger",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":35,
-                 "x":5244.125,
-                 "y":548
+                 "x":5936.375,
+                 "y":244
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -127,17 +105,6 @@
          "id":6,
          "name":"Trigger Missile",
          "objects":[
-                {
-                 "height":1020,
-                 "id":35,
-                 "name":"missile",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":4,
-                 "x":1432.39393939394,
-                 "y":7.18181818181813
-                }, 
                 {
                  "height":1020,
                  "id":36,
