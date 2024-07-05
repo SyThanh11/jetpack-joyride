@@ -1,3 +1,4 @@
+import CONST from '../const/Const'
 import { Game } from '../scenes/Game'
 import StartState from '../scenes/state/StartState'
 import Button from './Button'
@@ -11,8 +12,6 @@ class GameOverUI extends Phaser.GameObjects.Container {
 
     constructor(scene: Game) {
         super(scene)
-        const gameWidth = Number(scene.game.config.width)
-        const gameHeight = Number(scene.game.config.height)
 
         const graphics = this.scene.add.graphics()
         graphics.fillStyle(0x000000, 0.5)
@@ -23,14 +22,14 @@ class GameOverUI extends Phaser.GameObjects.Container {
             Number(this.scene.game.config.height)
         )
 
-        const baseFontSize = gameWidth / 30
+        const baseFontSize = CONST.GAME_WIDTH / 30
         const fontSize = Math.floor(baseFontSize)
         const coinFontSize = Math.floor(baseFontSize * 0.8)
-        const scaleFactor = Math.min(gameWidth, gameHeight) / 800
+        const scaleFactor = Math.min(CONST.GAME_WIDTH, CONST.GAME_HEIGHT) / 800
 
         this.textTitle = scene.add
-            .text(gameWidth / 2, gameHeight / 4, 'Game Over', {
-                fontSize: `${gameWidth / 20}px`,
+            .text(CONST.GAME_WIDTH / 2, CONST.GAME_HEIGHT / 4, 'Game Over', {
+                fontSize: `${CONST.GAME_WIDTH / 20}px`,
                 color: '#FFFFFF',
                 align: 'center',
                 fontFamily: 'Arial',
@@ -39,7 +38,7 @@ class GameOverUI extends Phaser.GameObjects.Container {
             .setOrigin(0.5, 0.5)
 
         this.textScore = scene.add
-            .text(gameWidth / 2, gameHeight / 2.5, `SCORE 0000 M`, {
+            .text(CONST.GAME_WIDTH / 2, CONST.GAME_HEIGHT / 2.5, `SCORE 0000 M`, {
                 fontSize: `${fontSize}px`,
                 color: '#FFFFFF',
                 fontFamily: 'Arial',
@@ -48,7 +47,7 @@ class GameOverUI extends Phaser.GameObjects.Container {
             .setOrigin(0.5, 0.5)
 
         this.textBestScore = scene.add
-            .text(gameWidth / 2, gameHeight / 2, `BEST 0000 M`, {
+            .text(CONST.GAME_WIDTH / 2, CONST.GAME_HEIGHT / 2, `BEST 0000 M`, {
                 fontSize: `${fontSize}px`,
                 color: '#FFFFFF',
                 fontFamily: 'Arial',
@@ -57,7 +56,7 @@ class GameOverUI extends Phaser.GameObjects.Container {
             .setOrigin(0.5, 0.5)
 
         this.textCoin = scene.add
-            .text(gameWidth / 2, gameHeight / 1.6, `COIN 0000`, {
+            .text(CONST.GAME_WIDTH / 2, CONST.GAME_HEIGHT / 1.6, `COIN 0000`, {
                 fontSize: `${coinFontSize}px`,
                 color: 'yellow',
                 fontFamily: 'Arial',
@@ -66,8 +65,8 @@ class GameOverUI extends Phaser.GameObjects.Container {
 
         this.button = new Button(
             scene,
-            gameWidth / 2,
-            gameHeight / 1.4,
+            CONST.GAME_WIDTH / 2,
+            CONST.GAME_HEIGHT / 1.4,
             'controlButtonPause',
             50,
             50,

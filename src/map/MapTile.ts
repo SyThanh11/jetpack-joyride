@@ -5,6 +5,7 @@ import ZapperManager from '../objects/obstacles/zapper/ZapperManager'
 import Zapper from '../objects/obstacles/zapper/Zapper'
 import MissileManager from '../objects/obstacles/missile/MissileManager'
 import LaserManager from '../objects/obstacles/laser/LaserManager'
+import CONST from '../const/Const'
 
 class MapTile extends Phaser.GameObjects.Container {
     protected map: Phaser.Tilemaps.Tilemap
@@ -46,9 +47,7 @@ class MapTile extends Phaser.GameObjects.Container {
         this.init()
         this.setupBackgroundLayers()
 
-        const gameWidth = Number(this.scene.game.config.width)
-        const gameHeight = Number(this.scene.game.config.height)
-        const scaleFactor = Math.min(gameWidth, gameHeight) / 1000
+        const scaleFactor = Math.min(CONST.GAME_WIDTH, CONST.GAME_HEIGHT) / 1000
 
         if (this.havingCoinTile) {
             const coinsObjects = this.map.createFromObjects('Coin Object Layer', {
@@ -235,7 +234,7 @@ class MapTile extends Phaser.GameObjects.Container {
             const coin = coinObject as Phaser.Physics.Arcade.Sprite
             this.scene.physics.add.overlap(player, coin, () => {
                 coin.play('collectCoin')
-                coin.on('animationcomplete-collectCoin', () => {
+                coin.on(CONST.ANIMATION_COMPLETE_KEY + 'collectCoin', () => {
                     if (coin.active) {
                         Events.emit('addCoin', this)
                         coin.setVisible(false)

@@ -1,3 +1,4 @@
+import CONST from '../../../const/Const'
 import { Events } from '../../../scenes/Game'
 import Player from '../../player/state/Player'
 
@@ -13,8 +14,6 @@ class Laser extends Phaser.GameObjects.Container {
     private laserPower: Phaser.Physics.Arcade.Sprite
 
     private animationsStarted: boolean
-
-    private gameWidth: number
 
     private laserFireLPMusic: Phaser.Sound.BaseSound | null = null
     private laserStartMusic: Phaser.Sound.BaseSound | null = null
@@ -37,8 +36,6 @@ class Laser extends Phaser.GameObjects.Container {
         this.laserStartMusic = this.scene.sound.add('laserStartMusic')
         this.laserStopMusic = this.scene.sound.add('laserStopMusic')
         this.laserWarningMusic = this.scene.sound.add('laserWarningMusic')
-
-        this.gameWidth = Number(this.scene.game.config.width)
         this.laserLeft = this.createSprite(0, 0, 'laser')
         this.laserRight = this.createSprite(0, 0, 'laser')
         this.laserEnergyLeft = this.createSprite(0, 0, 'laserEnergy')
@@ -60,7 +57,7 @@ class Laser extends Phaser.GameObjects.Container {
         this.scene.physics.world.enable(this)
         this.scene.add.existing(this)
         this.setScale(0.7)
-        this.body.setSize(this.gameWidth / 0.7, 0)
+        this.body.setSize(CONST.GAME_WIDTH / 0.7, 0)
 
         this.setupSprites()
         this.positionLaserWarning()
@@ -83,21 +80,21 @@ class Laser extends Phaser.GameObjects.Container {
         this.laserLeft.x = -this.laserLeft.width
         this.laserLeft.x = 0
 
-        this.laserRight.x = this.gameWidth / 0.7 + this.laserLeft.width
+        this.laserRight.x = CONST.GAME_WIDTH / 0.7 + this.laserLeft.width
         this.laserRight.flipX = true
         this.laserEnergyLeft.x = this.laserLeft.width
-        this.laserEnergyRight.x = this.gameWidth / 0.7 - this.laserLeft.width
+        this.laserEnergyRight.x = CONST.GAME_WIDTH / 0.7 - this.laserLeft.width
         this.laserEnergyRight.flipX = true
         this.laserGLowLeft.x = this.laserLeft.width - this.laserGLowLeft.width / 2
         this.laserGLowRight.x =
-            this.gameWidth / 0.7 - this.laserLeft.width + this.laserGLowRight.width / 2
+            CONST.GAME_WIDTH / 0.7 - this.laserLeft.width + this.laserGLowRight.width / 2
         this.laserGLowRight.flipX = true
         this.laserGLowLeft.setScale(4)
         this.laserGLowRight.setScale(4)
-        this.laserPower.x = this.gameWidth / 0.7 / 2
+        this.laserPower.x = CONST.GAME_WIDTH / 0.7 / 2
         this.laserPower.setScale(4)
         this.laserPower.displayWidth =
-            this.gameWidth / 0.7 - this.laserLeft.width - this.laserRight.width
+            CONST.GAME_WIDTH / 0.7 - this.laserLeft.width - this.laserRight.width
 
         this.laserPower.setVisible(false)
         this.laserGLowLeft.setVisible(false)
@@ -123,15 +120,15 @@ class Laser extends Phaser.GameObjects.Container {
     }
 
     private setupAnimationEvents() {
-        this.laserEnergyLeft.on('animationstart', () => this.laserStartMusic?.play())
-        this.laserEnergyRight.on('animationstart', () => this.laserStartMusic?.play())
-        this.laserPower.on('animationstart', () => this.laserFireLPMusic?.play())
-        this.laserWarning.on('animationstart', () => this.laserWarningMusic?.play())
+        this.laserEnergyLeft.on(CONST.ANIMATION_START, () => this.laserStartMusic?.play())
+        this.laserEnergyRight.on(CONST.ANIMATION_START, () => this.laserStartMusic?.play())
+        this.laserPower.on(CONST.ANIMATION_START, () => this.laserFireLPMusic?.play())
+        this.laserWarning.on(CONST.ANIMATION_START, () => this.laserWarningMusic?.play())
 
-        this.laserEnergyLeft.on('animationcomplete', () => this.laserStopMusic?.play())
-        this.laserEnergyRight.on('animationcomplete', () => this.laserStopMusic?.play())
-        this.laserPower.on('animationcomplete', () => this.laserFireLPMusic?.stop())
-        this.laserWarning.on('animationcomplete', () => this.laserWarningMusic?.stop())
+        this.laserEnergyLeft.on(CONST.ANIMATION_COMPLETE, () => this.laserStopMusic?.play())
+        this.laserEnergyRight.on(CONST.ANIMATION_COMPLETE, () => this.laserStopMusic?.play())
+        this.laserPower.on(CONST.ANIMATION_COMPLETE, () => this.laserFireLPMusic?.stop())
+        this.laserWarning.on(CONST.ANIMATION_COMPLETE, () => this.laserWarningMusic?.stop())
     }
 
     public startAnimations() {
@@ -147,7 +144,7 @@ class Laser extends Phaser.GameObjects.Container {
 
         this.scene.tweens.add({
             targets: this.laserRight,
-            x: this.gameWidth / 0.7 - this.laserRight.width,
+            x: CONST.GAME_WIDTH / 0.7 - this.laserRight.width,
             duration: 2000,
             ease: 'Power2',
             onComplete: () => {
@@ -159,8 +156,12 @@ class Laser extends Phaser.GameObjects.Container {
             },
         })
 
-        this.laserLeft.on('animationcomplete-laser', () => this.onInitialAnimationComplete())
-        this.laserPower.on('animationcomplete-laserPower', () => this.onPowerAnimationComplete())
+        this.laserLeft.on(CONST.ANIMATION_COMPLETE_KEY + 'laser', () =>
+            this.onInitialAnimationComplete()
+        )
+        this.laserPower.on(CONST.ANIMATION_COMPLETE_KEY + 'laserPower', () =>
+            this.onPowerAnimationComplete()
+        )
     }
 
     private playInitialAnimations() {
@@ -229,7 +230,7 @@ class Laser extends Phaser.GameObjects.Container {
 
         this.scene.tweens.add({
             targets: this.laserRight,
-            x: this.gameWidth / 0.7 + this.laserRight.width,
+            x: CONST.GAME_WIDTH / 0.7 + this.laserRight.width,
             duration: 1000,
         })
 

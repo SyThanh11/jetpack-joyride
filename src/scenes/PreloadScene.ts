@@ -1,4 +1,5 @@
 import { Scene } from 'phaser'
+import CONST from '../const/Const'
 
 class PreloadScene extends Scene {
     constructor() {
@@ -171,22 +172,24 @@ class PreloadScene extends Scene {
         this.load.audio('rocketExplodeMusic', ['assets/SFX/Obstacle/Missile/rocket_explode_1.mp3'])
         this.load.audio('selectButtonMusic', ['assets/SFX/UI/ui_select.mp3'])
 
-        const gameWidth = Number(this.game.config.width)
-        const gameHeight = Number(this.game.config.height)
-
-        const image = this.add.image(gameWidth / 2, gameHeight / 2, 'screen')
+        const image = this.add.image(CONST.GAME_WIDTH / 2, CONST.GAME_HEIGHT / 2, 'screen')
 
         image.setOrigin(0.5, 0.5)
-        image.setScale(gameWidth / image.width, gameHeight / image.height)
+        image.setScale(CONST.GAME_WIDTH / image.width, CONST.GAME_HEIGHT / image.height)
 
         const progressBar = this.add.graphics()
         const progressBox = this.add.graphics()
         progressBox.fillStyle(0x222222, 0.8)
-        progressBox.fillRect(gameWidth / 2, gameHeight / 1.3, gameWidth / 3, gameHeight / 20)
+        progressBox.fillRect(
+            CONST.GAME_WIDTH / 2,
+            CONST.GAME_HEIGHT / 1.3,
+            CONST.GAME_WIDTH / 3,
+            CONST.GAME_HEIGHT / 20
+        )
 
         const percentText = this.make.text({
-            x: gameWidth / 1.5,
-            y: gameHeight / 1.26,
+            x: CONST.GAME_WIDTH / 1.5,
+            y: CONST.GAME_HEIGHT / 1.26,
             text: '0%',
             style: {
                 font: '18px monospace',
@@ -200,10 +203,10 @@ class PreloadScene extends Scene {
             progressBar.clear()
             progressBar.fillStyle(0xffffff, 1)
             progressBar.fillRect(
-                gameWidth / 2,
-                gameHeight / 1.3,
-                (gameWidth / 3) * value,
-                gameHeight / 20
+                CONST.GAME_WIDTH / 2,
+                CONST.GAME_HEIGHT / 1.3,
+                (CONST.GAME_WIDTH / 3) * value,
+                CONST.GAME_HEIGHT / 20
             )
         })
     }

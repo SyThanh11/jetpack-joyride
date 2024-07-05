@@ -1,3 +1,4 @@
+import CONST from '../../const/Const'
 import { Game } from '../Game'
 import State from './GamePlayState'
 import PlayState from './PlayState'
@@ -8,25 +9,23 @@ class StartState implements State {
     public enter(): void {
         console.log('Begin Start State')
 
-        const gameWidth = Number(this.scene.game.config.width)
-        const gameHeight = Number(this.scene.game.config.height)
         this.scene.gameStarted = false
 
-        const titleWidth = gameWidth * 0.5
-        const titleHeight = titleWidth * (9 / 16)
+        const titleWidth = CONST.GAME_WIDTH * 0.5
+        const titleHeight = CONST.GAME_HEIGHT * (9 / 16)
 
         this.scene.title = this.scene.add
-            .image(gameWidth / 2, gameHeight / 2.5, 'mainMenu')
+            .image(CONST.GAME_WIDTH / 2, CONST.GAME_HEIGHT / 2.5, 'mainMenu')
             .setDepth(1)
         this.scene.title.setDisplaySize(titleWidth, titleHeight)
 
         const textStyle = {
             fontFamily: 'Arial',
-            fontSize: `${gameWidth * 0.02}px`,
+            fontSize: `${CONST.GAME_WIDTH * 0.02}px`,
             color: '#FFFFFF',
         }
         this.scene.blinkingText = this.scene.add
-            .text(gameWidth / 2, gameHeight / 1.6, 'PRESS START TO PLAY', textStyle)
+            .text(CONST.GAME_WIDTH / 2, CONST.GAME_HEIGHT / 1.6, 'PRESS START TO PLAY', textStyle)
             .setOrigin(0.5)
 
         this.scene.tweens.add({

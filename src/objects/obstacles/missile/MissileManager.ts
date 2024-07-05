@@ -1,3 +1,4 @@
+import CONST from '../../../const/Const'
 import Player from '../../player/state/Player'
 import Missile from './Missile'
 import MissileState from './MissileState'
@@ -51,11 +52,11 @@ class MissileManager {
             .sprite(missileX - 32 * 3.5 * missileAlertScale, missileY, 'missileAlert')
             .setOrigin(0, 0)
 
-        missileAlert.on('animationstart', () => {
+        missileAlert.on(CONST.ANIMATION_START, () => {
             this.missileWarningMusic?.play()
         })
 
-        missileAlert.on('animationcomplete', () => {
+        missileAlert.on(CONST.ANIMATION_COMPLETE, () => {
             this.missileWarningMusic?.stop()
             missile.getMissileAlert()?.destroy()
             missile.setMissileAlert(null)

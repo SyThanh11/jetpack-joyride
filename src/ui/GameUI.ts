@@ -1,3 +1,4 @@
+import CONST from '../const/Const'
 import { Game } from '../scenes/Game'
 import PauseState from '../scenes/state/PauseState'
 import Button from './Button'
@@ -11,15 +12,13 @@ class GameUI extends Phaser.GameObjects.Container {
 
     constructor(scene: Game) {
         super(scene)
-        const gameWidth = Number(scene.game.config.width)
-        const gameHeight = Number(scene.game.config.height)
 
-        const baseFontSize = gameWidth / 50
+        const baseFontSize = CONST.GAME_WIDTH / 50
         const fontSize = Math.floor(baseFontSize)
         const smallFontSize = Math.floor(baseFontSize * 0.8)
         const coinFontSize = Math.floor(baseFontSize * 0.8)
 
-        this.textScore = scene.add.text(gameWidth / 50, gameHeight / 8, `0000 M`, {
+        this.textScore = scene.add.text(CONST.GAME_WIDTH / 50, CONST.GAME_HEIGHT / 8, `0000 M`, {
             fontSize: `${fontSize}px`,
             color: '#FFFFFF',
             fontFamily: 'Arial',
@@ -27,8 +26,8 @@ class GameUI extends Phaser.GameObjects.Container {
         })
 
         this.textBestScore = scene.add.text(
-            gameWidth / 50,
-            gameHeight / 6,
+            CONST.GAME_WIDTH / 50,
+            CONST.GAME_HEIGHT / 6,
             `BEST ${localStorage.getItem('bestScore') || '0000'}`,
             {
                 fontSize: `${smallFontSize}px`,
@@ -37,21 +36,21 @@ class GameUI extends Phaser.GameObjects.Container {
             }
         )
 
-        this.textCoin = scene.add.text(gameWidth / 25, gameHeight / 4.9, `0000`, {
+        this.textCoin = scene.add.text(CONST.GAME_WIDTH / 25, CONST.GAME_HEIGHT / 4.9, `0000`, {
             fontSize: `${coinFontSize}px`,
             color: 'yellow',
             fontFamily: 'Arial',
         })
 
-        this.imageCoin = scene.add.image(gameWidth / 38, gameHeight / 4.6, 'coin')
+        this.imageCoin = scene.add.image(CONST.GAME_WIDTH / 38, CONST.GAME_HEIGHT / 4.6, 'coin')
 
-        const scaleFactor = Math.min(gameWidth, gameHeight) / 1000
+        const scaleFactor = Math.min(CONST.GAME_WIDTH, CONST.GAME_HEIGHT) / 1000
         this.imageCoin.setScale(scaleFactor)
 
         this.button = new Button(
             scene,
-            gameWidth - gameWidth / 50,
-            gameHeight / 6.5,
+            CONST.GAME_WIDTH - CONST.GAME_WIDTH / 50,
+            CONST.GAME_HEIGHT / 6.5,
             'buttonPause',
             50,
             50,

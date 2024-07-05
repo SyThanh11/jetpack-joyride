@@ -1,3 +1,4 @@
+import CONST from '../../../const/Const'
 import MissileState from './MissileState'
 
 class Missile extends Phaser.GameObjects.Container {
@@ -25,11 +26,11 @@ class Missile extends Phaser.GameObjects.Container {
     }
 
     private setupAnimationEvents() {
-        this.missile.on('animationstart', () => {
+        this.missile.on(CONST.ANIMATION_START, () => {
             this.missileLaunchMusic?.play()
         })
 
-        this.missile.on('animationcomplete', () => {
+        this.missile.on(CONST.ANIMATION_COMPLETE, () => {
             this.missileLaunchMusic?.stop()
         })
     }
@@ -84,10 +85,10 @@ class Missile extends Phaser.GameObjects.Container {
 
     public triggerMissileEffect = () => {
         const explosion = this.scene.add.sprite(this.x, this.y, 'missileExplosion')
-        explosion.once('animationstart', () => {
+        explosion.once(CONST.ANIMATION_START, () => {
             this.rocketExplodeMusic?.play()
         })
-        explosion.once('animationcomplete', () => {
+        explosion.once(CONST.ANIMATION_COMPLETE, () => {
             this.rocketExplodeMusic?.stop()
             explosion.destroy()
         })

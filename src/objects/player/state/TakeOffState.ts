@@ -3,6 +3,7 @@ import RunState from './RunState'
 import FlyState from './FlyState'
 import DieState from './DieState'
 import Player from './Player'
+import CONST from '../../../const/Const'
 
 class TakeOffState extends PlayerState {
     enter(player: Player): void {
@@ -11,7 +12,7 @@ class TakeOffState extends PlayerState {
         player.body.setGravityY(0)
         player.body.setVelocityY(0)
 
-        player.getDefaultBody().on('animationcomplete-takeOffBody', () => {
+        player.getDefaultBody().on(CONST.ANIMATION_COMPLETE_KEY + 'takeOffBody', () => {
             this.handleAnimationComplete(player)
         })
     }

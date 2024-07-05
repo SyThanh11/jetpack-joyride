@@ -159,9 +159,15 @@ class Zapper extends Phaser.GameObjects.Container {
     }
 
     public collisionWithPlayer(player: Player): void {
-        this.scene.physics.add.collider(player, this.listColliders)
-        this.scene.physics.add.collider(player, this.zapperOne)
-        this.scene.physics.add.collider(player, this.zapperTwo)
+        this.scene.physics.add.collider(player, this.listColliders, () =>
+            this.handleCollison(player)
+        )
+        this.scene.physics.add.collider(player, this.zapperOne, () => this.handleCollison(player))
+        this.scene.physics.add.collider(player, this.zapperTwo, () => this.handleCollison(player))
+    }
+
+    public handleCollison(player: Player): void {
+        player.playAnimation('electricBody', 'electricHead')
     }
 }
 
