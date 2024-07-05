@@ -83,7 +83,7 @@
          "name":"Tile Layer 2",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":272,
          "x":0,
          "y":0
