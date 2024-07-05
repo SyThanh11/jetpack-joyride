@@ -11,8 +11,6 @@ class MapTile extends Phaser.GameObjects.Container {
     protected map: Phaser.Tilemaps.Tilemap
     protected backgroundLayer: Phaser.Tilemaps.TilemapLayer | null = null
     protected backgroundLayerTwo: Phaser.Tilemaps.TilemapLayer | null = null
-    protected backgroundLayerThree: Phaser.Tilemaps.TilemapLayer | null = null
-    protected backgroundLayerFour: Phaser.Tilemaps.TilemapLayer | null = null
 
     protected alarmContainer: Phaser.GameObjects.Container
     protected coinContainer: Phaser.GameObjects.Container
@@ -53,11 +51,11 @@ class MapTile extends Phaser.GameObjects.Container {
             const coinsObjects = this.map.createFromObjects('Coin Object Layer', {
                 name: 'coin',
                 key: 'coin',
-                classType: Phaser.Physics.Arcade.Sprite,
+                classType: Phaser.GameObjects.Sprite,
             })
 
             coinsObjects.forEach((coinObject) => {
-                const coin = coinObject as Phaser.Physics.Arcade.Sprite
+                const coin = coinObject as Phaser.GameObjects.Sprite
                 this.scene.physics.add.existing(coin)
                 coin.setPosition(coin.x, coin.y * scaleFactor)
                 coin.setActive(true)
@@ -74,11 +72,11 @@ class MapTile extends Phaser.GameObjects.Container {
         if (this.havingMissileTile) {
             const missileTriggerObjects = this.map.createFromObjects('Trigger Missile', {
                 name: 'missile',
-                classType: Phaser.Physics.Arcade.Sprite,
+                classType: Phaser.GameObjects.Sprite,
             })
 
             missileTriggerObjects.forEach((missileTriggerObject) => {
-                const missileTrigger = missileTriggerObject as Phaser.Physics.Arcade.Sprite
+                const missileTrigger = missileTriggerObject as Phaser.GameObjects.Sprite
 
                 this.scene.physics.add.existing(missileTrigger)
                 missileTrigger.setActive(false)
@@ -90,11 +88,11 @@ class MapTile extends Phaser.GameObjects.Container {
         if (this.havingZaggerTile) {
             const zaggerObjects = this.map.createFromObjects('Zagger Object Layer', {
                 name: 'zagger',
-                classType: Phaser.Physics.Arcade.Sprite,
+                classType: Phaser.GameObjects.Sprite,
             })
 
             zaggerObjects.forEach((zaggerObject) => {
-                const zagger = zaggerObject as Phaser.Physics.Arcade.Sprite
+                const zagger = zaggerObject as Phaser.GameObjects.Sprite
                 zagger.setVisible(false)
                 if (zagger) {
                     const spawnedZagger = this.zapperManager.spawnZapper(
@@ -112,11 +110,11 @@ class MapTile extends Phaser.GameObjects.Container {
         if (this.havingLaserTile) {
             const laserTriggerObjects = this.map.createFromObjects('Trigger Laser', {
                 name: 'laser',
-                classType: Phaser.Physics.Arcade.Sprite,
+                classType: Phaser.GameObjects.Sprite,
             })
 
             laserTriggerObjects.forEach((laserTriggerObject) => {
-                const laserTrigger = laserTriggerObject as Phaser.Physics.Arcade.Sprite
+                const laserTrigger = laserTriggerObject as Phaser.GameObjects.Sprite
 
                 this.scene.physics.add.existing(laserTrigger)
                 laserTrigger.setActive(false)
@@ -129,15 +127,15 @@ class MapTile extends Phaser.GameObjects.Container {
             const alarmObjects = this.map.createFromObjects('Alarm Light Layer', {
                 name: 'alarm',
                 key: 'alarmLightGlow_TVOS',
-                classType: Phaser.Physics.Arcade.Sprite,
+                classType: Phaser.GameObjects.Sprite,
             })
 
             alarmObjects.forEach((alarmObject) => {
-                const alarm = alarmObject as Phaser.Physics.Arcade.Sprite
+                const alarm = alarmObject as Phaser.GameObjects.Sprite
                 alarm.setPosition(alarm.x, alarm.y * scaleFactor)
                 alarm.setScale(scaleFactor)
                 alarm.play('alarmLightGlow_TVOS')
-                this.scene.physics.add.existing(alarm)
+                this.scene.add.existing(alarm)
                 this.alarmContainer.add(alarm)
             })
         }
@@ -160,12 +158,7 @@ class MapTile extends Phaser.GameObjects.Container {
     }
 
     private setupBackgroundLayers(): void {
-        const layers = [
-            this.backgroundLayerFour,
-            this.backgroundLayerThree,
-            this.backgroundLayer,
-            this.backgroundLayerTwo,
-        ]
+        const layers = [this.backgroundLayer, this.backgroundLayerTwo]
         layers.forEach((layer) => {
             if (layer) {
                 this.add(layer)
@@ -178,12 +171,7 @@ class MapTile extends Phaser.GameObjects.Container {
     }
 
     private updateBackgroundLayers(): void {
-        const layers = [
-            this.backgroundLayerFour,
-            this.backgroundLayerThree,
-            this.backgroundLayer,
-            this.backgroundLayerTwo,
-        ]
+        const layers = [this.backgroundLayer, this.backgroundLayerTwo]
         layers.forEach((layer) => {
             if (layer) {
                 layer.x = this.x
@@ -231,7 +219,7 @@ class MapTile extends Phaser.GameObjects.Container {
 
     public collisionWithCoin(player: Player): void {
         this.coinContainer.list.forEach((coinObject) => {
-            const coin = coinObject as Phaser.Physics.Arcade.Sprite
+            const coin = coinObject as Phaser.GameObjects.Sprite
             this.scene.physics.add.overlap(player, coin, () => {
                 coin.play('collectCoin')
                 coin.on(CONST.ANIMATION_COMPLETE_KEY + 'collectCoin', () => {

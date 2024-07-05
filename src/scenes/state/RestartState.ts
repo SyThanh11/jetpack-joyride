@@ -1,6 +1,5 @@
 import { Game } from '../Game'
 import State from './GamePlayState'
-import StartState from './StartState'
 
 class RestartState implements State {
     constructor(private scene: Game) {}
@@ -10,7 +9,7 @@ class RestartState implements State {
 
         this.scene.scene.stop('Game')
         this.scene.scene.start('Game')
-        this.scene.stateMachine.changeState(new StartState(this.scene))
+        // this.scene.stateMachine.changeState(new StartState(this.scene))
     }
 
     public exit(): void {

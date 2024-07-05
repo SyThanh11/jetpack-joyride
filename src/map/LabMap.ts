@@ -13,6 +13,7 @@ class LabMap extends MapTile {
 
         this.havingCoinTile = true
         this.havingMissileTile = true
+        this.havingZaggerTile = true
     }
 }
 

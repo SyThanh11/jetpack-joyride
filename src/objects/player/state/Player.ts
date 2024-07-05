@@ -61,16 +61,28 @@ class Player extends Phaser.GameObjects.Container {
             0,
             'defaultJetpack'
         ).setOrigin(0, 0)
+
         this.bulletPool = this.scene.add.group({
             classType: Bullet,
             maxSize: 40,
             runChildUpdate: true,
+            createCallback: (obj: Phaser.GameObjects.GameObject) => {
+                const bullet = obj as Bullet
+                bullet.setActive(false)
+                bullet.setVisible(false)
+            },
         })
         this.bulletEffect = new Phaser.Physics.Arcade.Sprite(this.scene, 9, 54, 'bulletFlash')
+
         this.cartouchePool = this.scene.add.group({
             classType: Cartouche,
             maxSize: 30,
             runChildUpdate: true,
+            createCallback: (obj: Phaser.GameObjects.GameObject) => {
+                const cartouche = obj as Cartouche
+                cartouche.setActive(false)
+                cartouche.setVisible(false)
+            },
         })
 
         this.add(this.defaultBody)
@@ -182,6 +194,24 @@ class Player extends Phaser.GameObjects.Container {
 
     public getAllBullets(): Bullet[] {
         return this.bulletPool.getChildren() as Bullet[]
+    }
+
+    public reset(): void {
+        this.moving = false
+        this.body.setVelocityX(0)
+        this.defaultBody.anims.stop()
+        this.defaultHead.anims.stop()
+        this.bulletEffect.anims.stop()
+        this.bulletEffect.setVisible(false)
+        this.isFired = false
+        this.bulletPool.clear(true, true)
+        this.cartouchePool.clear(true, true)
+        this.runMetalMusic?.stop()
+        this.playerHurt?.stop()
+        this.playerBones?.stop()
+        this.fallBounce?.stop()
+        this.jetpackFire?.stop()
+        this.jetpackStop?.stop()
     }
 }
 

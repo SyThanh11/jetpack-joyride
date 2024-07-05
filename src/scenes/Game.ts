@@ -43,6 +43,7 @@ export class Game extends Scene {
         this.zapperManager = new ZapperManager(this)
         this.missileManager = new MissileManager(this)
         this.laserManager = new LaserManager(this)
+        this.score.setCoin(0)
 
         this.mapManager = new MapManager(this)
 

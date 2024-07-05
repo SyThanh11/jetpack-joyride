@@ -5,8 +5,6 @@ import MapTile from './MapTile'
 import RoomMap from './RoomMap'
 import LabMap from './LabMap'
 import Player from '../objects/player/state/Player'
-import AquariumMap from './AquariumMap'
-import CaveMap from './CaveMap'
 
 class MapManager {
     private mapPool: Phaser.GameObjects.Group
@@ -28,12 +26,10 @@ class MapManager {
         const hallwayOneMap = new HallwayOneMap(scene, 0, 0)
         const roomMap = new RoomMap(scene, 0, 0)
         const labMap = new LabMap(scene, 0, 0)
-        const aquariumMap = new AquariumMap(scene, 0, 0)
-        const caveMap = new CaveMap(scene, 0, 0)
 
-        this.mapPool.addMultiple([hallwayMap, hallwayOneMap, labMap, roomMap, aquariumMap, caveMap])
+        this.mapPool.addMultiple([hallwayMap, hallwayOneMap, labMap, roomMap])
 
-        this.maps.push(hallwayOneMap, labMap, roomMap, aquariumMap, caveMap)
+        this.maps.push(hallwayOneMap, labMap, roomMap)
 
         this.arrangeMaps()
     }
@@ -56,11 +52,13 @@ class MapManager {
     }
 
     public update(): void {
-        const firstMap = this.maps[0]
+        const activeMaps = this.maps.filter((map) => map.active)
+
+        const firstMap = activeMaps[0]
         const firstMapBackgroundLayer = firstMap?.getBackgroundLayer()
         if (firstMapBackgroundLayer && firstMapBackgroundLayer.width) {
             if (firstMap.x + firstMapBackgroundLayer.width <= 0) {
-                const lastMap = this.maps[this.maps.length - 1]
+                const lastMap = activeMaps[activeMaps.length - 1]
                 const lastMapBackgroundLayer = lastMap?.getBackgroundLayer()
                 if (lastMapBackgroundLayer && lastMapBackgroundLayer.width) {
                     firstMap.x = lastMap.x + lastMapBackgroundLayer.width - 32 * 4
@@ -73,9 +71,11 @@ class MapManager {
     public reset(): void {
         this.mapPool.getChildren().forEach((map) => {
             const mapEle = map as MapTile
-            mapEle.reset()
-            mapEle.setVisible(false)
-            mapEle.setActive(false)
+            if (mapEle.active) {
+                mapEle.reset()
+                mapEle.setVisible(false)
+                mapEle.setActive(false)
+            }
         })
 
         this.maps = []
@@ -92,50 +92,72 @@ class MapManager {
     public start(): void {
         this.mapPool.getChildren().forEach((map) => {
             const mapTile = map as MapTile
-            mapTile.start()
+            if (mapTile.active) {
+                mapTile.start()
+            }
         })
     }
 
     public stop(): void {
         this.mapPool.getChildren().forEach((map) => {
             const mapTile = map as MapTile
-            mapTile.stop()
+            if (mapTile.active) {
+                mapTile.stop()
+            }
         })
     }
 
     public collisionWithCoin(player: Player) {
         this.mapPool.getChildren().forEach((map) => {
-            (map as MapTile).collisionWithCoin(player)
+            const mapTile = map as MapTile
+            if (mapTile.active) {
+                mapTile.collisionWithCoin(player)
+            }
         })
     }
 
     public zapperCollisionWithPlayer(player: Player) {
         this.mapPool.getChildren().forEach((map) => {
-            (map as MapTile).zapperCollisionWithPlayer(player)
+            const mapTile = map as MapTile
+            if (mapTile.active) {
+                mapTile.zapperCollisionWithPlayer(player)
+            }
         })
     }
 
     public triggerMissiles(player: Player) {
         this.mapPool.getChildren().forEach((map) => {
-            (map as MapTile).triggerMissiles(player)
+            const mapTile = map as MapTile
+            if (mapTile.active) {
+                mapTile.triggerMissiles(player)
+            }
         })
     }
 
     public missileCollisionWithPlayer(player: Player) {
         this.mapPool.getChildren().forEach((map) => {
-            (map as MapTile).missileCollisionWithPlayer(player)
+            const mapTile = map as MapTile
+            if (mapTile.active) {
+                mapTile.missileCollisionWithPlayer(player)
+            }
         })
     }
 
     public triggerLasers(player: Player) {
         this.mapPool.getChildren().forEach((map) => {
-            (map as MapTile).triggerLasers(player)
+            const mapTile = map as MapTile
+            if (mapTile.active) {
+                mapTile.triggerLasers(player)
+            }
         })
     }
 
     public laserCollisionWithPlayer(player: Player) {
         this.mapPool.getChildren().forEach((map) => {
-            (map as MapTile).laserCollisionWithPlayer(player)
+            const mapTile = map as MapTile
+            if (mapTile.active) {
+                mapTile.laserCollisionWithPlayer(player)
+            }
         })
     }
 }

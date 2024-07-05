@@ -13,6 +13,8 @@ class RoomMap extends MapTile {
 
         this.havingCoinTile = true
         this.havingLaserTile = true
+        this.havingZaggerTile = true
+        this.havingMissileTile = true
     }
 }
 

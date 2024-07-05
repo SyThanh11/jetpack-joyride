@@ -13,6 +13,8 @@ class HallwayOneMap extends MapTile {
         }
 
         this.havingCoinTile = true
+        this.havingLaserTile = true
+        this.havingMissileTile = true
         this.havingZaggerTile = true
         this.havingAlarmTile = true
     }

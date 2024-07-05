@@ -1,6 +1,6 @@
 import CONST from '../const/const'
 import { Game } from '../scenes/Game'
-import StartState from '../scenes/state/StartState'
+import RestartState from '../scenes/state/RestartState'
 import Button from './Button'
 
 class GameOverUI extends Phaser.GameObjects.Container {
@@ -71,10 +71,11 @@ class GameOverUI extends Phaser.GameObjects.Container {
             50,
             50,
             () => {
-                this.scene.scene.stop('Game')
-                this.scene.scene.start('Game')
-                scene.stateMachine.changeState(new StartState(scene))
+                // this.scene.scene.stop('Game')
+                // this.scene.scene.start('Game')
+                // scene.stateMachine.changeState(new StartState(scene))
                 scene.player.isStartMusic = false
+                scene.stateMachine.changeState(new RestartState(scene))
             },
             'HOME',
             {
