@@ -38,30 +38,6 @@ export class Game extends Scene {
     }
 
     public create() {
-        // const worldHeight = 32 * 32
-        // const worldWidth = (worldHeight / 9) * 16
-
-        // let width = window.innerWidth
-        // let height = window.innerHeight
-
-        // const ratio = 16 / 9
-        // if (width / ratio > window.innerHeight) {
-        //     width = height * ratio
-        // } else {
-        //     height = width / ratio
-        // }
-
-        // console.warn(this.game.scale.width, this.game.scale.height)
-
-        // this.game.scale.resize(width, height)
-        // console.warn(this.game.scale.width, this.game.scale.height)
-
-        // this.cameras.main.setZoom(width / worldWidth)
-        // this.cameras.main.centerOn(worldWidth / 2, worldHeight / 2)
-        // console.warn(width, worldWidth)
-
-        // this.game.config.width = width
-
         this.gameUI = new GameUI(this)
         this.player = new Player(this, CONST.GAME_WIDTH / 3, CONST.GAME_HEIGHT / 1.45).setDepth(2)
         this.zapperManager = new ZapperManager(this)
@@ -95,6 +71,28 @@ export class Game extends Scene {
 
         this.stateMachine = new StateMachine(this)
         this.stateMachine.changeState(new StartState(this))
+
+        // const worldHeight = 32 * 24
+        // const worldWidth = (worldHeight / 9) * 16
+
+        // let width = window.innerWidth
+        // let height = window.innerHeight
+
+        // const ratio = 16 / 9
+        // if (width / ratio > window.innerHeight) {
+        //     width = height * ratio
+        // } else {
+        //     height = width / ratio
+        // }
+
+        // console.warn(this.game.scale.width, this.game.scale.height)
+
+        // this.game.scale.resize(width, height)
+        // console.warn(this.game.scale.width, this.game.scale.height)
+
+        // this.cameras.main.setZoom(width / worldWidth)
+        // this.cameras.main.centerOn(worldWidth / 2, worldHeight / 2)
+        // console.warn(width, worldWidth)
     }
 
     public update(time: number, deltaTime: number): void {

@@ -9,8 +9,6 @@ const config: Types.Core.GameConfig = {
     type: Phaser.AUTO,
     width: Number(innerWidth) * devicePixelRatio,
     height: Number((innerWidth * 9) / 16) * devicePixelRatio,
-    // width: 0,
-    // height: 0,
     parent: 'game-container',
     backgroundColor: '#FFFFFF',
     scale: {

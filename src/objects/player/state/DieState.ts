@@ -8,6 +8,7 @@ class DieState extends PlayerState {
 
     enter(player: Player): void {
         player.playerHurt?.play()
+        player.setAlpha(0.5)
         player.playAnimation('dieBody', 'dieHead')
         player.remove(player.getJetpack(), true)
 
