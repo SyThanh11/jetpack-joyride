@@ -1,4 +1,4 @@
-import CONST from '../const/Const'
+import CONST from '../const/const'
 import { Game } from '../scenes/Game'
 import PauseState from '../scenes/state/PauseState'
 import Button from './Button'

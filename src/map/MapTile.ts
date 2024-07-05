@@ -5,7 +5,7 @@ import ZapperManager from '../objects/obstacles/zapper/ZapperManager'
 import Zapper from '../objects/obstacles/zapper/Zapper'
 import MissileManager from '../objects/obstacles/missile/MissileManager'
 import LaserManager from '../objects/obstacles/laser/LaserManager'
-import CONST from '../const/Const'
+import CONST from '../const/const'
 
 class MapTile extends Phaser.GameObjects.Container {
     protected map: Phaser.Tilemaps.Tilemap

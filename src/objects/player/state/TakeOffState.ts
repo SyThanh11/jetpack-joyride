@@ -3,7 +3,7 @@ import RunState from './RunState'
 import FlyState from './FlyState'
 import DieState from './DieState'
 import Player from './Player'
-import CONST from '../../../const/Const'
+import CONST from '../../../const/const'
 
 class TakeOffState extends PlayerState {
     enter(player: Player): void {

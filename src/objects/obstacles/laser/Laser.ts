@@ -1,4 +1,4 @@
-import CONST from '../../../const/Const'
+import CONST from '../../../const/const'
 import { Events } from '../../../scenes/Game'
 import Player from '../../player/state/Player'
 

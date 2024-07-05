@@ -9,7 +9,7 @@ import GameUI from '../ui/GameUI'
 import StateMachine from './state/StateMachine'
 import StartState from './state/StartState'
 import Laser from '../objects/obstacles/laser/Laser'
-import CONST from '../const/Const'
+import CONST from '../const/const'
 
 export const Events = new Phaser.Events.EventEmitter()
 

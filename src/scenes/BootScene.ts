@@ -1,5 +1,5 @@
 import { Scene } from 'phaser'
-import CONST from '../const/Const'
+import CONST from '../const/const'
 
 class BootGameScene extends Scene {
     constructor() {
