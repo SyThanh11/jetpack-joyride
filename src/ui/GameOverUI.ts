@@ -71,10 +71,6 @@ class GameOverUI extends Phaser.GameObjects.Container {
             50,
             50,
             () => {
-                // this.scene.scene.stop('Game')
-                // this.scene.scene.start('Game')
-                // scene.stateMachine.changeState(new StartState(scene))
-                scene.player.isStartMusic = false
                 scene.stateMachine.changeState(new RestartState(scene))
             },
             'HOME',

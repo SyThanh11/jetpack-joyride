@@ -7,9 +7,12 @@ class RestartState implements State {
     public enter(): void {
         console.log('Begin Restart State')
 
+        if (this.scene.music) {
+            this.scene.music.stop()
+        }
         this.scene.scene.stop('Game')
         this.scene.scene.start('Game')
-        // this.scene.stateMachine.changeState(new StartState(this.scene))
+        this.scene.player.isStartMusic = false
     }
 
     public exit(): void {
