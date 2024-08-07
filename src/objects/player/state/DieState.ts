@@ -1,4 +1,5 @@
-import { Game } from '../../../scenes/Game'
+import MusicManager from '../../../music/MusicManager'
+import Game from '../../../scenes/Game'
 import GameOverState from '../../../scenes/state/GameOverState'
 import Player from './Player'
 import PlayerState from './PlayerState'
@@ -7,7 +8,8 @@ class DieState extends PlayerState {
     private heightOrigin: number
 
     enter(player: Player): void {
-        player.playerHurt?.play()
+        MusicManager.getInstance(player.scene).stopRunMetalMusic()
+        MusicManager.getInstance(player.scene).playPlayerHurt()
         player.setAlpha(0.5)
         player.playAnimation('dieBody', 'dieHead')
         player.remove(player.getJetpack(), true)

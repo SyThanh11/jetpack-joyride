@@ -1,3 +1,4 @@
+import MusicManager from '../../../music/MusicManager'
 import Bullet from '../Bullet'
 import Cartouche from '../Cartouche'
 import PlayerState from './PlayerState'
@@ -15,14 +16,7 @@ class Player extends Phaser.GameObjects.Container {
     private moving = false
     private currentState: PlayerState
     private isFired = false
-
-    public runMetalMusic: Phaser.Sound.BaseSound | null = null
-    public playerHurt: Phaser.Sound.BaseSound | null = null
-    public fallBounce: Phaser.Sound.BaseSound | null = null
-    private playerBones: Phaser.Sound.BaseSound | null = null
-    private jetpackFire: Phaser.Sound.BaseSound | null = null
-    private jetpackStop: Phaser.Sound.BaseSound | null = null
-    public isStartMusic = true
+    public isStartMusic = false
 
     constructor(
         scene: Phaser.Scene,
@@ -36,13 +30,6 @@ class Player extends Phaser.GameObjects.Container {
     }
 
     init() {
-        this.runMetalMusic = this.scene.sound.add('runMetalMusic')
-        this.playerHurt = this.scene.sound.add('playerHurt')
-        this.playerBones = this.scene.sound.add('playerBones')
-        this.fallBounce = this.scene.sound.add('fallBounce')
-        this.jetpackFire = this.scene.sound.add('jetpackFireLP')
-        this.jetpackStop = this.scene.sound.add('jetpackStop')
-
         this.defaultHead = new Phaser.Physics.Arcade.Sprite(
             this.scene,
             2,
@@ -125,8 +112,8 @@ class Player extends Phaser.GameObjects.Container {
 
         this.isFired = true
         if (this.isStartMusic) {
-            this.jetpackFire?.play({ loop: true })
-            this.jetpackStop?.stop()
+            MusicManager.getInstance(this.scene).playJetpackFire()
+            MusicManager.getInstance(this.scene).stopJetpackStop()
         }
         this.bulletEffect.play('bulletFlash')
         this.bulletEffect.setVisible(true)
@@ -137,15 +124,15 @@ class Player extends Phaser.GameObjects.Container {
 
         this.isFired = false
         if (this.isStartMusic) {
-            this.jetpackStop?.play()
-            this.jetpackFire?.stop()
+            MusicManager.getInstance(this.scene).playJetpackStop()
+            MusicManager.getInstance(this.scene).stopJetpackFire()
         }
         this.bulletEffect.anims.stop()
         this.bulletEffect.setVisible(false)
     }
 
     public handleCollision = (): void => {
-        this.playerBones?.play()
+        MusicManager.getInstance(this.scene).playPlayerBones()
         this.currentState.handleCollision(this)
     }
 
@@ -206,12 +193,6 @@ class Player extends Phaser.GameObjects.Container {
         this.isFired = false
         this.bulletPool.clear(true, true)
         this.cartouchePool.clear(true, true)
-        this.runMetalMusic?.stop()
-        this.playerHurt?.stop()
-        this.playerBones?.stop()
-        this.fallBounce?.stop()
-        this.jetpackFire?.stop()
-        this.jetpackStop?.stop()
     }
 }
 

@@ -1,4 +1,4 @@
-import { Game } from '../Game'
+import Game from '../Game'
 import PauseScene from '../PauseScene'
 import State from './GamePlayState'
 

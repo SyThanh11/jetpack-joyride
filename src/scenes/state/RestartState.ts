@@ -1,4 +1,5 @@
-import { Game } from '../Game'
+import MusicManager from '../../music/MusicManager'
+import Game from '../Game'
 import State from './GamePlayState'
 
 class RestartState implements State {
@@ -6,10 +7,7 @@ class RestartState implements State {
 
     public enter(): void {
         console.log('Begin Restart State')
-
-        if (this.scene.music) {
-            this.scene.music.stop()
-        }
+        MusicManager.getInstance(this.scene).stopAllMusics()
         this.scene.scene.stop('Game')
         this.scene.scene.start('Game')
         this.scene.player.isStartMusic = false

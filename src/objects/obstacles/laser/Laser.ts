@@ -1,4 +1,5 @@
 import CONST from '../../../const/const'
+import MusicManager from '../../../music/MusicManager'
 import { Events } from '../../../scenes/Game'
 import Player from '../../player/state/Player'
 
@@ -15,11 +16,6 @@ class Laser extends Phaser.GameObjects.Container {
 
     private animationsStarted: boolean
 
-    private laserFireLPMusic: Phaser.Sound.BaseSound | null = null
-    private laserStartMusic: Phaser.Sound.BaseSound | null = null
-    private laserStopMusic: Phaser.Sound.BaseSound | null = null
-    private laserWarningMusic: Phaser.Sound.BaseSound | null = null
-
     constructor(
         scene: Phaser.Scene,
         x?: number,
@@ -32,10 +28,6 @@ class Laser extends Phaser.GameObjects.Container {
     }
 
     public init() {
-        this.laserFireLPMusic = this.scene.sound.add('laserFireLPMusic')
-        this.laserStartMusic = this.scene.sound.add('laserStartMusic')
-        this.laserStopMusic = this.scene.sound.add('laserStopMusic')
-        this.laserWarningMusic = this.scene.sound.add('laserWarningMusic')
         this.laserLeft = this.createSprite(0, 0, 'laser')
         this.laserRight = this.createSprite(0, 0, 'laser')
         this.laserEnergyLeft = this.createSprite(0, 0, 'laserEnergy')
@@ -120,15 +112,30 @@ class Laser extends Phaser.GameObjects.Container {
     }
 
     private setupAnimationEvents() {
-        this.laserEnergyLeft.on(CONST.ANIMATION_START, () => this.laserStartMusic?.play())
-        this.laserEnergyRight.on(CONST.ANIMATION_START, () => this.laserStartMusic?.play())
-        this.laserPower.on(CONST.ANIMATION_START, () => this.laserFireLPMusic?.play())
-        this.laserWarning.on(CONST.ANIMATION_START, () => this.laserWarningMusic?.play())
-
-        this.laserEnergyLeft.on(CONST.ANIMATION_COMPLETE, () => this.laserStopMusic?.play())
-        this.laserEnergyRight.on(CONST.ANIMATION_COMPLETE, () => this.laserStopMusic?.play())
-        this.laserPower.on(CONST.ANIMATION_COMPLETE, () => this.laserFireLPMusic?.stop())
-        this.laserWarning.on(CONST.ANIMATION_COMPLETE, () => this.laserWarningMusic?.stop())
+        this.laserEnergyLeft.on(CONST.ANIMATION_START, () =>
+            MusicManager.getInstance(this.scene).playLaserStartMusic()
+        )
+        this.laserEnergyRight.on(CONST.ANIMATION_START, () =>
+            MusicManager.getInstance(this.scene).playLaserStartMusic()
+        )
+        this.laserPower.on(CONST.ANIMATION_START, () =>
+            MusicManager.getInstance(this.scene).playLaserFireLPMusic()
+        )
+        this.laserWarning.on(CONST.ANIMATION_START, () =>
+            MusicManager.getInstance(this.scene).playLaserWarningMusic()
+        )
+        this.laserEnergyLeft.on(CONST.ANIMATION_COMPLETE, () =>
+            MusicManager.getInstance(this.scene).playLaserStopMusic()
+        )
+        this.laserEnergyRight.on(CONST.ANIMATION_COMPLETE, () =>
+            MusicManager.getInstance(this.scene).playLaserStopMusic()
+        )
+        this.laserPower.on(CONST.ANIMATION_COMPLETE, () =>
+            MusicManager.getInstance(this.scene).stopLaserFireLPMusic()
+        )
+        this.laserWarning.on(CONST.ANIMATION_COMPLETE, () =>
+            MusicManager.getInstance(this.scene).stopLaserWarningMusic()
+        )
     }
 
     public startAnimations() {

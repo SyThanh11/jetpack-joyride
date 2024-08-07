@@ -1,3 +1,4 @@
+import MusicManager from '../../../music/MusicManager'
 import DieState from './DieState'
 import FlyState from './FlyState'
 import Player from './Player'
@@ -5,7 +6,7 @@ import PlayerState from './PlayerState'
 
 class RunState extends PlayerState {
     enter(player: Player): void {
-        player.runMetalMusic?.play({ loop: true })
+        MusicManager.getInstance(player.scene).playRunMetalMusic()
         player.playAnimation('runBody', 'runHead', 'runJetpack')
     }
 

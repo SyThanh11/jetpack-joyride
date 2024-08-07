@@ -1,4 +1,4 @@
-import { Game } from '../Game'
+import Game from '../Game'
 import State from './GamePlayState'
 
 class PlayState implements State {
@@ -6,9 +6,6 @@ class PlayState implements State {
 
     public enter(): void {
         console.log('Begin Play State')
-
-        this.scene.music = this.scene.sound.add('musicLevel')
-        this.scene.music.play({ loop: true })
 
         this.scene.player.start()
         this.scene.mapManager.start()

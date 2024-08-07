@@ -1,5 +1,5 @@
 import CONST from '../../const/const'
-import { Game } from '../Game'
+import Game from '../Game'
 import State from './GamePlayState'
 import PlayState from './PlayState'
 

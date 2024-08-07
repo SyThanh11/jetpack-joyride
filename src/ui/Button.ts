@@ -1,7 +1,8 @@
+import MusicManager from '../music/MusicManager'
+
 class Button extends Phaser.GameObjects.Container {
     private text: Phaser.GameObjects.Text
     private background: Phaser.GameObjects.Image
-    private selectButtonMusic: Phaser.Sound.BaseSound | null = null
 
     constructor(
         scene: Phaser.Scene,
@@ -15,8 +16,6 @@ class Button extends Phaser.GameObjects.Container {
         textStyle: object
     ) {
         super(scene, x, y)
-
-        this.selectButtonMusic = this.scene.sound.add('selectButtonMusic')
 
         this.text = this.scene.add.text(0, 0, text, textStyle).setOrigin(0.5, 0.5)
         this.background = this.scene.add.image(0, 0, texture).setOrigin(0.5, 0.5)
@@ -34,7 +33,7 @@ class Button extends Phaser.GameObjects.Container {
         this.on(
             'pointerdown',
             () => {
-                this.selectButtonMusic?.play()
+                MusicManager.getInstance(this.scene).playSelectButtonMusic()
                 callBack.call(this)
             },
             this

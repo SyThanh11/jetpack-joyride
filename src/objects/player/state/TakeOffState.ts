@@ -4,10 +4,11 @@ import FlyState from './FlyState'
 import DieState from './DieState'
 import Player from './Player'
 import CONST from '../../../const/const'
+import MusicManager from '../../../music/MusicManager'
 
 class TakeOffState extends PlayerState {
     enter(player: Player): void {
-        player.fallBounce?.play()
+        MusicManager.getInstance(player.scene).playFallBounce()
         player.playAnimation('takeOffBody', 'takeOffHead', 'takeOffJetpack')
         player.body.setGravityY(0)
         player.body.setVelocityY(0)

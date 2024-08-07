@@ -1,4 +1,5 @@
 import CONST from '../../../const/const'
+import MusicManager from '../../../music/MusicManager'
 import MissileState from './MissileState'
 
 class Missile extends Phaser.GameObjects.Container {
@@ -8,9 +9,6 @@ class Missile extends Phaser.GameObjects.Container {
     private currentState: MissileState
     private missileAlert: Phaser.Physics.Arcade.Sprite | null
 
-    private missileLaunchMusic: Phaser.Sound.BaseSound | null = null
-    private rocketExplodeMusic: Phaser.Sound.BaseSound | null = null
-
     constructor(
         scene: Phaser.Scene,
         x?: number,
@@ -18,8 +16,6 @@ class Missile extends Phaser.GameObjects.Container {
         children?: Phaser.GameObjects.GameObject[]
     ) {
         super(scene, x, y, children)
-        this.missileLaunchMusic = scene.sound.add('missileLaunchMusic')
-        this.rocketExplodeMusic = scene.sound.add('rocketExplodeMusic')
 
         this.init()
         this.setupAnimationEvents()
@@ -27,11 +23,11 @@ class Missile extends Phaser.GameObjects.Container {
 
     private setupAnimationEvents() {
         this.missile.on(CONST.ANIMATION_START, () => {
-            this.missileLaunchMusic?.play()
+            MusicManager.getInstance(this.scene).playMissileLaunchMusic()
         })
 
         this.missile.on(CONST.ANIMATION_COMPLETE, () => {
-            this.missileLaunchMusic?.stop()
+            MusicManager.getInstance(this.scene).stopMissileLaunchMusic()
         })
     }
 
@@ -86,10 +82,10 @@ class Missile extends Phaser.GameObjects.Container {
     public triggerMissileEffect = () => {
         const explosion = this.scene.add.sprite(this.x, this.y, 'missileExplosion')
         explosion.once(CONST.ANIMATION_START, () => {
-            this.rocketExplodeMusic?.play()
+            MusicManager.getInstance(this.scene).playRocketExplodeMusic()
         })
         explosion.once(CONST.ANIMATION_COMPLETE, () => {
-            this.rocketExplodeMusic?.stop()
+            MusicManager.getInstance(this.scene).stopRocketExplodeMusic()
             explosion.destroy()
         })
         explosion.play('missileExplosion')

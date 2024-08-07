@@ -1,4 +1,5 @@
 import CONST from '../../../const/const'
+import MusicManager from '../../../music/MusicManager'
 import Player from '../../player/state/Player'
 import Missile from './Missile'
 import MissileState from './MissileState'
@@ -6,11 +7,8 @@ import MissileState from './MissileState'
 class MissileManager {
     private missilePool: Phaser.GameObjects.Group
     private numberMissiles = 1
-    private missileWarningMusic: Phaser.Sound.BaseSound | null = null
 
     constructor(scene: Phaser.Scene) {
-        this.missileWarningMusic = scene.sound.add('missileWarningMusic')
-
         this.missilePool = new Phaser.GameObjects.Group(scene, {
             classType: Missile,
             maxSize: 10,
@@ -53,11 +51,11 @@ class MissileManager {
             .setOrigin(0, 0)
 
         missileAlert.on(CONST.ANIMATION_START, () => {
-            this.missileWarningMusic?.play()
+            MusicManager.getInstance(missileAlert.scene).playMissileWarningMusic
         })
 
         missileAlert.on(CONST.ANIMATION_COMPLETE, () => {
-            this.missileWarningMusic?.stop()
+            MusicManager.getInstance(missileAlert.scene).stopMissileWarningMusic()
             missile.getMissileAlert()?.destroy()
             missile.setMissileAlert(null)
             scene.physics.add.existing(missile)

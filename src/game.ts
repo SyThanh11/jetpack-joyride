@@ -1,9 +1,8 @@
-import { Game as MainGame } from './scenes/Game'
-
-import { Game, Types } from 'phaser'
 import PreloadScene from './scenes/PreloadScene'
 import BootGameScene from './scenes/BootScene'
 import PauseScene from './scenes/PauseScene'
+import { Types } from 'phaser'
+import Game from './scenes/Game'
 
 const config: Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -21,7 +20,7 @@ const config: Types.Core.GameConfig = {
             // debug: true,
         },
     },
-    scene: [BootGameScene, PreloadScene, MainGame, PauseScene],
+    scene: [BootGameScene, PreloadScene, Game, PauseScene],
 }
 
-export default new Game(config)
+export default new Phaser.Game(config)

@@ -1,5 +1,5 @@
 import GameOverUI from '../../ui/GameOverUI'
-import { Game } from '../Game'
+import Game from '../Game'
 import State from './GamePlayState'
 
 class GameOverState implements State {

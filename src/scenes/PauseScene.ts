@@ -1,13 +1,15 @@
+import Phaser from 'phaser'
 import Button from '../ui/Button'
-import { Game } from './Game'
+import Game from './Game'
 import ContinueState from './state/ContinueState'
-import RestartState from './state/RestartState'
+import MusicManager from '../music/MusicManager'
 
 class PauseScene extends Phaser.Scene {
     private buttonHome: Button
     private buttonContinue: Button
     private text: Phaser.GameObjects.Text
     private sceneGame: Game
+
     constructor() {
         super('PauseScene')
     }
@@ -42,7 +44,11 @@ class PauseScene extends Phaser.Scene {
             100,
             100,
             () => {
-                this.sceneGame.stateMachine.changeState(new RestartState(this.sceneGame))
+                MusicManager.getInstance(this.sceneGame).stopAllMusics()
+                this.scene.stop('PauseScene')
+                this.scene.stop('Game')
+                this.scene.start('Game')
+                MusicManager.getInstance(this.sceneGame).playMusicLevel()
             },
             'HOME',
             {
